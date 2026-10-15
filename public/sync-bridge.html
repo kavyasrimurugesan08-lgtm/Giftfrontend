@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GIFTPocket Store Sync Bridge</title>
+</head>
+<body>
+  <script>
+    // Allowed Origins for Admin Communication
+    const ALLOWED_ORIGINS = [
+      'http://localhost:5174',
+      'http://localhost:5173',
+      'http://127.0.0.1:5174',
+      'http://127.0.0.1:5173'
+    ];
+
+    // Helper to send all keys to Admin
+    function sendAllStateToAdmin(source, origin) {
+      const allData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('giftpocket_')) {
+          try {
+            allData[key] = JSON.parse(localStorage.getItem(key));
+          } catch {
+            allData[key] = localStorage.getItem(key);
+          }
+        }
+      }
+      source.postMessage({
+        type: 'GIFTPOCKET_SYNC_INIT_RESPONSE',
+        data: allData
+      }, origin);
+    }
+
+    // Listen to messages from Admin Panel
+    window.addEventListener('message', (event) => {
+      // Validate origin if needed (permit localhost)
+      const data = event.data;
+      if (!data || typeof data !== 'object') return;
+
+      if (data.type === 'GIFTPOCKET_SYNC_SET') {
+        const { key, value } = data;
+        if (key) {
+          const stringVal = typeof value === 'string' ? value : JSON.stringify(value);
+          localStorage.setItem(key, stringVal);
+          
+          // Trigger local custom event
+          window.dispatchEvent(new CustomEvent('giftpocket_store_synced', {
+            detail: { key, value }
+          }));
+        }
+      } else if (data.type === 'GIFTPOCKET_SYNC_GET_ALL') {
+        sendAllStateToAdmin(event.source, event.origin);
+      }
+    });
+
+    // Notify parent window that bridge is ready
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'GIFTPOCKET_SYNC_BRIDGE_READY' }, '*');
+    }
+  </script>
+</body>
+</html>

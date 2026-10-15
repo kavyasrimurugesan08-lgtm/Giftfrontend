@@ -1,0 +1,177 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Sparkles, ShoppingBag, Eye, Heart, ArrowRight } from 'lucide-react';
+import { PRODUCTS } from '../../data/products';
+import { useCart } from '../../context/CartContext';
+import { QuickViewModal } from '../product/QuickViewModal';
+import { DoodleSparkle } from '../common/BlobShape';
+
+export const FeaturedShowcase = () => {
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const { addToCart } = useCart();
+
+  const heroProduct = PRODUCTS[0]; // Custom Name Phone Charm
+  const secondary1 = PRODUCTS[3]; // Couple Magnetic Bracelet
+  const secondary2 = PRODUCTS[4]; // Custom Keychain
+
+  return (
+    <section className="py-24 bg-[#EDE8E1] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Title with Editorial Framing */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 border-b border-[#D4C9BA] pb-6">
+          <div>
+            <span className="text-xs font-black tracking-[0.25em] text-[#C97D67] uppercase block mb-1">
+              Lookbook Atelier
+            </span>
+            <h2 className="font-editorial text-3xl sm:text-5xl text-[#121110] font-black tracking-tight">
+              Handcrafted with Personality
+            </h2>
+          </div>
+          <Link
+            to="/shop"
+            className="mt-4 md:mt-0 text-xs font-display font-black tracking-widest uppercase text-[#1A1816] hover:text-[#C97D67] flex items-center gap-1.5 transition-colors"
+          >
+            <span>VIEW COMPLETE CATALOGUE</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {/* Magazine Editorial Composition: 1 Large Hero + 2 Stacked Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Main Hero Highlight (7 Cols) with Sandstone Tone */}
+          <div className="lg:col-span-7 bg-[#DFD7CB]/75 rounded-3xl p-6 sm:p-10 border border-[#D4C9BA] flex flex-col justify-between relative overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-300">
+            
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="px-3.5 py-1.5 bg-[#C97D67] text-white rounded-full text-xs font-black tracking-wider shadow-xs uppercase">
+                MOST LOVED
+              </span>
+              <span className="font-hand text-xl text-[#C97D67] font-bold">
+                Handmade just for you ♡
+              </span>
+            </div>
+
+            {/* Center Product Image */}
+            <div className="my-8 relative flex items-center justify-center">
+              <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 transition-transform duration-700">
+                <img
+                  src={heroProduct.images[0]}
+                  alt={heroProduct.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <DoodleSparkle className="absolute -top-4 right-12 w-8 h-8 text-[#D69E4A] animate-pulse-slow" />
+            </div>
+
+            {/* Bottom Info & CTAs */}
+            <div className="relative z-10 space-y-3">
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-editorial text-2xl sm:text-3xl text-[#121110] font-black">
+                  {heroProduct.name}
+                </h3>
+                <span className="font-display font-extrabold text-2xl text-[#C97D67]">
+                  ₹{heroProduct.price}
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#544E48] font-medium leading-relaxed max-w-lg">
+                {heroProduct.description}
+              </p>
+
+              <div className="pt-3 flex flex-wrap items-center gap-3">
+                <Link
+                  to={`/product/${heroProduct.slug}?customize=true`}
+                  className="px-6 py-3.5 bg-[#C97D67] hover:bg-[#1A1816] text-white rounded-full font-display font-bold text-xs tracking-wider uppercase transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#D69E4A]" />
+                  <span>Customize in 2D Studio</span>
+                </Link>
+                <button
+                  onClick={() => setQuickViewProduct(heroProduct)}
+                  className="px-5 py-3.5 bg-white hover:bg-[#FAF8F5] text-[#1A1816] rounded-full font-display font-bold text-xs tracking-wider uppercase border border-[#D4C9BA] transition-colors flex items-center gap-2 shadow-2xs cursor-pointer"
+                >
+                  <Eye className="w-4 h-4 text-[#544E48]" />
+                  <span>Quick View</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Secondary Stack (5 Cols) with Sage and Sandstone */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            
+            {/* Secondary 1 - Sage Tone */}
+            <div className="flex-1 bg-[#717C6D]/20 rounded-3xl p-6 border border-[#717C6D]/40 flex flex-col sm:flex-row items-center gap-6 group hover:shadow-lg transition-all duration-300">
+              <div className="w-36 h-36 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0">
+                <img
+                  src={secondary1.images[0]}
+                  alt={secondary1.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+              </div>
+              <div className="flex-1 space-y-2 text-center sm:text-left">
+                <span className="text-[10px] font-black tracking-widest text-[#717C6D] uppercase block">
+                  Couple Keepsake
+                </span>
+                <h4 className="font-display font-bold text-base text-[#121110]">
+                  {secondary1.name}
+                </h4>
+                <div className="font-extrabold text-[#C97D67] text-base">
+                  ₹{secondary1.price}
+                </div>
+                <Link
+                  to={`/product/${secondary1.slug}`}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A1816] hover:text-[#C97D67]"
+                >
+                  <span>Discover Pair</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Secondary 2 - Lilac / Ochre Tone */}
+            <div className="flex-1 bg-[#9E8EB8]/20 rounded-3xl p-6 border border-[#9E8EB8]/40 flex flex-col sm:flex-row items-center gap-6 group hover:shadow-lg transition-all duration-300">
+              <div className="w-36 h-36 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0">
+                <img
+                  src={secondary2.images[0]}
+                  alt={secondary2.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+              </div>
+              <div className="flex-1 space-y-2 text-center sm:text-left">
+                <span className="text-[10px] font-black tracking-widest text-[#9E8EB8] uppercase block">
+                  Miniature Keychain
+                </span>
+                <h4 className="font-display font-bold text-base text-[#121110]">
+                  {secondary2.name}
+                </h4>
+                <div className="font-extrabold text-[#C97D67] text-base">
+                  ₹{secondary2.price}
+                </div>
+                <Link
+                  to={`/product/${secondary2.slug}?customize=true`}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A1816] hover:text-[#C97D67]"
+                >
+                  <span>Engrave Name</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Quick View Modal */}
+      {quickViewProduct && (
+        <QuickViewModal
+          product={quickViewProduct}
+          onClose={() => setQuickViewProduct(null)}
+        />
+      )}
+    </section>
+  );
+};
