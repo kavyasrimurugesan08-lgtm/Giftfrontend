@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { PRODUCTS, MOODS } from '../data/products';
+import { MOODS } from '../data/products';
 import { useCollections } from '../context/CollectionsContext';
+import { useProducts } from '../context/ProductsContext';
 import { QuickViewModal } from '../components/product/QuickViewModal';
 import { ProductCard } from '../components/product/ProductCard';
 import { 
@@ -40,6 +41,7 @@ const iconMap = {
 export const CategoriesPage = () => {
   const navigate = useNavigate();
   const { categories } = useCollections();
+  const { products } = useProducts();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState(categories[0]?.slug || 'phone-charms');
   const [quickViewProduct, setQuickViewProduct] = useState(null);
@@ -51,7 +53,7 @@ export const CategoriesPage = () => {
   );
 
   // Get products for the active tab preview
-  const tabProducts = PRODUCTS.filter(p => p.category === activeTab).slice(0, 4);
+  const tabProducts = products.filter(p => p.category === activeTab).slice(0, 4);
   const activeCategoryObj = categories.find(c => c.slug === activeTab) || categories[0];
 
   const getCategoryHighlights = (slug) => {
@@ -166,16 +168,17 @@ export const CategoriesPage = () => {
                     className="group relative bg-[#18110D] text-white rounded-3xl border-2 border-[#3D2C24] overflow-hidden shadow-lg hover:shadow-2xl hover:border-[#AC5B44] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
                   >
                     {/* Top Image Banner with Deep Contrast Mask */}
-                    <div className="relative h-52 sm:h-56 overflow-hidden bg-[#2B1C14]">
-                      <img
-                        src={cat.image}
-                        alt={cat.name}
-                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 opacity-90"
-                        loading="lazy"
-                        onError={(e) => {
-                          e.target.src = 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80';
-                        }}
-                      />
+                    <div className="relative h-52 sm:h-56 overflow-hidden bg-[#2B1C14] flex items-center justify-center">
+                      {cat.image ? (
+                        <img
+                          src={cat.image}
+                          alt={cat.name}
+                          className="w-full h-full object-cover opacity-90 block"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#2B1C14]" />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#18110D] via-[#18110D]/65 via-40% to-black/15" />
 
                       {/* Floating Badge */}
@@ -326,12 +329,16 @@ export const CategoriesPage = () => {
                 to={`/shop?mood=${mood.filter}`}
                 className="group relative rounded-2xl overflow-hidden bg-white border border-[#D9A99A]/60 p-4 flex flex-col items-center text-center hover:shadow-lg transition-all hover:-translate-y-1 shadow-2xs"
               >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden mb-3 shadow-sm">
-                  <img
-                    src={mood.image}
-                    alt={mood.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden mb-3 shadow-sm flex items-center justify-center bg-[#FAF8F5]">
+                  {mood.image ? (
+                    <img
+                      src={mood.image}
+                      alt={mood.title}
+                      className="w-full h-full object-cover block"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#FAF8F5]" />
+                  )}
                 </div>
                 <span className="text-[10px] font-black text-[#AC5B44] uppercase tracking-wider">
                   {mood.tag}

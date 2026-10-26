@@ -171,7 +171,7 @@ export const MobileMenu = ({ isOpen, onClose, navLinks }) => {
             <div className="flex items-center justify-between text-[11px]">
               <span className="flex items-center gap-1.5 font-semibold text-[#332822]">
                 <Phone className="w-3.5 h-3.5 text-[#B96F58]" />
-                <span>+91 98420 13465</span>
+                <span>+91 98656 83004</span>
               </span>
               <span className="flex items-center gap-1.5 text-emerald-800 font-bold bg-emerald-100/80 px-2 py-0.5 rounded-full">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />

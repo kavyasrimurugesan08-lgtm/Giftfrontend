@@ -15,11 +15,13 @@ import {
   Tag,
   ExternalLink,
   RotateCcw,
-  Mail
+  Mail,
+  MapPin
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { getWhatsAppOrderLink, WHATSAPP_PHONE_NUMBER } from '../utils/whatsappOrder';
 import { dispatchOrderEmailNotification } from '../utils/emailNotification';
+import { LocationPickerMap } from '../components/checkout/LocationPickerMap';
 
 export const CheckoutPage = () => {
   const { cartItems, subtotal, discountAmount, appliedCoupon, shippingFee, total, clearCart } = useCart();
@@ -37,14 +39,26 @@ export const CheckoutPage = () => {
     email: user?.email || '',
     phone: user?.phone || '',
     street: user?.addresses?.[0]?.street || '',
-    city: user?.addresses?.[0]?.city || 'Bengaluru',
-    state: user?.addresses?.[0]?.state || 'Karnataka',
-    pincode: user?.addresses?.[0]?.pincode || '560038',
-    notes: ''
+    city: user?.addresses?.[0]?.city || '',
+    state: user?.addresses?.[0]?.state || '',
+    pincode: user?.addresses?.[0]?.pincode || '',
+    notes: '',
+    mapLocationUrl: ''
   });
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLocationResolved = (loc) => {
+    setFormData((prev) => ({
+      ...prev,
+      street: loc.street || loc.fullAddress || prev.street,
+      city: loc.city || prev.city,
+      state: loc.state || prev.state,
+      pincode: loc.pincode || prev.pincode,
+      mapLocationUrl: loc.mapLocationUrl || prev.mapLocationUrl
+    }));
   };
 
   const handlePlaceWhatsAppOrder = async (e) => {
@@ -97,17 +111,18 @@ export const CheckoutPage = () => {
       total,
       items: cartItems,
       address: `${formData.street}, ${formData.city}, ${formData.state} - ${formData.pincode}`,
+      mapLocationUrl: formData.mapLocationUrl || '',
       paymentMethod: 'WhatsApp Order (UPI / COD on Chat)',
       status: 'WhatsApp Order Sent'
     });
 
-    setPlacedOrder(orderRecord || { id: orderId, total });
+    setPlacedOrder(orderRecord || { id: orderId, total, mapLocationUrl: formData.mapLocationUrl });
     setIsSubmitted(true);
 
     // Send order confirmation email notification
     setEmailSending(true);
     dispatchOrderEmailNotification({
-      order: { id: orderId, total, paymentMethod: 'WhatsApp Order (UPI / COD on Chat)' },
+      order: { id: orderId, total, paymentMethod: 'WhatsApp Order (UPI / COD on Chat)', mapLocationUrl: formData.mapLocationUrl },
       customer: formData,
       items: cartItems,
       pricing: { subtotal, discountAmount, shippingFee, total }
@@ -239,6 +254,21 @@ export const CheckoutPage = () => {
                   <span>{formData.email}</span>
                 </strong>
               </div>
+              {formData.mapLocationUrl && (
+                <div className="flex justify-between border-b border-[#D9A99A]/40 pb-2">
+                  <span className="text-[#6F5145]">Pinned GPS Location:</span>
+                  <a
+                    href={formData.mapLocationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#B96F58] hover:underline font-bold flex items-center gap-1 text-[11px]"
+                  >
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>View Map Pin</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-[#6F5145]">Estimated Dispatch:</span>
                 <strong className="text-emerald-700">Within 24 Hours via Express Post</strong>
@@ -354,7 +384,7 @@ export const CheckoutPage = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="e.g. +91 98420 13465"
+                      placeholder="e.g. +91 98656 83004"
                       className="w-full px-3.5 py-2.5 bg-[#F8E8D5]/40 rounded-xl border border-[#D9A99A]/60 focus:outline-none focus:border-[#B96F58] font-sans text-xs"
                     />
                   </div>
@@ -374,20 +404,46 @@ export const CheckoutPage = () => {
                   </div>
                 </div>
 
-                {/* Street Address */}
+                {/* Map & Geolocation Picker */}
+                <div className="pt-2">
+                  <LocationPickerMap
+                    onLocationResolved={handleLocationResolved}
+                    initialAddress={formData.street}
+                  />
+                </div>
+
+                {/* Street Address & Location Textarea (Auto-filled from map) */}
                 <div className="space-y-1">
-                  <label className="font-bold text-[#332822] uppercase tracking-wider block">
-                    Street Address & Flat / House No. *
-                  </label>
-                  <input
-                    type="text"
+                  <div className="flex items-center justify-between">
+                    <label className="font-bold text-[#332822] uppercase tracking-wider block">
+                      Delivery Address & Location *
+                    </label>
+                    {formData.mapLocationUrl && (
+                      <a
+                        href={formData.mapLocationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-bold text-[#B96F58] hover:underline flex items-center gap-1"
+                      >
+                        <MapPin className="w-3 h-3" />
+                        <span>View GPS Pin</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    )}
+                  </div>
+                  <textarea
+                    rows={3}
                     required
                     name="street"
                     value={formData.street}
                     onChange={handleInputChange}
-                    placeholder="Flat 402, Bloom Residency, 12th Main Road"
-                    className="w-full px-3.5 py-2.5 bg-[#F8E8D5]/40 rounded-xl border border-[#D9A99A]/60 focus:outline-none focus:border-[#B96F58] font-sans text-xs"
+                    placeholder="Flat / House No., Apartment name, Street, Landmark (Auto-filled when you tap 'Use Current Location' or drag map pin)"
+                    className="w-full px-3.5 py-2.5 bg-[#F8E8D5]/40 rounded-xl border border-[#D9A99A]/60 focus:outline-none focus:border-[#B96F58] font-sans text-xs transition-all resize-y leading-relaxed"
                   />
+                  <p className="text-[10px] text-[#6F5145] flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-[#B96F58]" />
+                    <span>Auto-formatted when you pinpoint your location on the map above. You can add flat/house number or landmark anytime.</span>
+                  </p>
                 </div>
 
                 {/* City, State, Pincode */}

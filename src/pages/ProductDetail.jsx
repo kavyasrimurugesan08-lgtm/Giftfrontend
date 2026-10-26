@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { PRODUCTS } from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { Star, Heart, ShoppingBag, Sparkles, ShieldCheck, Truck, RotateCcw, Plus, Minus, Check, ArrowRight, Package } from 'lucide-react';
@@ -13,7 +13,8 @@ export const ProductDetail = () => {
   const shouldOpenCustomizer = searchParams.get('customize') === 'true';
   const navigate = useNavigate();
 
-  const product = PRODUCTS.find((p) => p.slug === slug) || PRODUCTS[0];
+  const { products, getProduct } = useProducts();
+  const product = getProduct(slug) || products[0] || {};
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -28,13 +29,19 @@ export const ProductDetail = () => {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
+  const primaryImage = product?.image || (Array.isArray(product?.images) && product?.images[0]) || '';
+  const images = (Array.isArray(product?.images) && product.images.length > 0)
+    ? product.images.filter(Boolean)
+    : (primaryImage ? [primaryImage] : []);
+  const activeImage = images[selectedImage] || primaryImage;
+
   const handleBuyNow = () => {
     addToCart(product, quantity);
     navigate('/checkout');
   };
 
-  const relatedProducts = PRODUCTS.filter(
-    (p) => p.category === product.category && p.id !== product.id
+  const relatedProducts = (products || []).filter(
+    (p) => p.category === product?.category && p.id !== product?.id
   ).slice(0, 4);
 
   return (
@@ -47,11 +54,11 @@ export const ProductDetail = () => {
           <span>/</span>
           <Link to="/shop" className="hover:text-[#B96F58]">Shop</Link>
           <span>/</span>
-          <Link to={`/shop?category=${product.category}`} className="hover:text-[#B96F58] capitalize">
-            {product.category.replace('-', ' ')}
+          <Link to={`/shop?category=${product?.category || ''}`} className="hover:text-[#B96F58] capitalize">
+            {(product?.category || '').replace('-', ' ')}
           </Link>
           <span>/</span>
-          <span className="font-semibold text-[#332822] truncate max-w-xs">{product.name}</span>
+          <span className="font-semibold text-[#332822] truncate max-w-xs">{product?.name}</span>
         </nav>
 
         {/* Main Product Showcase Section */}
@@ -59,23 +66,31 @@ export const ProductDetail = () => {
           
           {/* Gallery on Left (6 Cols) */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="aspect-square rounded-3xl overflow-hidden bg-white/60 border-2 border-[#D9A99A]/50 shadow-lg relative group">
-              <img
-                src={product.images[selectedImage]}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-              {product.badge && (
+            <div className="aspect-square rounded-3xl overflow-hidden bg-white/60 border-2 border-[#D9A99A]/50 shadow-lg relative group flex items-center justify-center">
+              {activeImage ? (
+                <img
+                  src={activeImage}
+                  alt={product?.name || 'Product'}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-[#F4DCD1]/30 text-[#6F5145]/70 p-6 text-center">
+                  <Package className="w-16 h-16 stroke-[1.2] mb-3 text-[#B96F58]/60" />
+                  <span className="text-sm font-semibold tracking-wide">Awaiting Product Photo</span>
+                  <span className="text-xs text-[#6F5145]/50 mt-1">Upload via Admin Panel</span>
+                </div>
+              )}
+              {product?.badge && (
                 <span className="absolute top-4 left-4 px-3 py-1 bg-[#E8D49A] text-[#6F5145] text-xs font-bold rounded-full uppercase shadow-xs">
                   {product.badge}
                 </span>
               )}
             </div>
 
-            {/* Thumbnail Carousel */}
-            {product.images.length > 1 && (
+            {/* Thumbnail Carousel (only if multiple images) */}
+            {images.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2">
-                {product.images.map((img, idx) => (
+                {images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(idx)}

@@ -59,6 +59,36 @@ export const AccountPage = () => {
     });
   };
 
+  if (!user || !isAuthenticated) {
+    return (
+      <div className="min-h-[80vh] bg-[#F8E8D5] pt-36 sm:pt-40 pb-20 flex items-center justify-center">
+        <div className="text-center space-y-4 max-w-md px-4">
+          <div className="w-16 h-16 rounded-3xl bg-[#FAF8F5] text-[#C97D67] flex items-center justify-center mx-auto shadow-md border border-[#D4C9BA]">
+            <User className="w-8 h-8" />
+          </div>
+          <h2 className="font-editorial text-3xl font-bold text-[#121110]">Sign in to your account</h2>
+          <p className="text-xs text-[#544E48]">
+            Sign in to check your order history, manage saved delivery addresses, and track real-time shipments.
+          </p>
+          <div className="pt-2 flex items-center justify-center gap-3">
+            <Link
+              to="/login"
+              className="px-6 py-3 bg-[#C97D67] text-white rounded-full text-xs font-bold shadow-md hover:bg-[#121110] transition-colors"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/register"
+              className="px-6 py-3 bg-[#FAF8F5] text-[#121110] rounded-full text-xs font-bold border border-[#D4C9BA] hover:bg-[#DFD7CB] transition-colors"
+            >
+              Create Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen pt-36 sm:pt-40 pb-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -484,7 +514,7 @@ export const TrackOrderPage = () => {
             Track Your GiftPocket Package
           </h1>
           <p className="text-xs sm:text-sm text-[#544E48] max-w-md mx-auto font-medium">
-            Enter your Order ID (e.g. ORD-98214) or Courier AWB number to check real-time status.
+            Enter your Order ID (e.g. GP-123456) or Courier AWB number to check real-time status.
           </p>
         </div>
 
@@ -492,7 +522,7 @@ export const TrackOrderPage = () => {
           <input
             type="text"
             required
-            placeholder="e.g. ORD-98214"
+            placeholder="e.g. GP-123456"
             value={trackingQuery}
             onChange={(e) => setTrackingQuery(e.target.value)}
             className="w-full px-4 py-3.5 bg-white rounded-2xl border border-[#D4C9BA] text-xs font-mono uppercase focus:outline-none focus:border-[#C97D67] shadow-2xs"

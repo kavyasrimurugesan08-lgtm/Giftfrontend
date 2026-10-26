@@ -8,9 +8,9 @@ export const HeroCinematic = () => {
   const { getHeroMedia } = useHomepageMedia();
   const { main, polaroid1, polaroid2 } = getHeroMedia();
 
-  const mainImg = main?.image || 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80';
-  const pol1Img = polaroid1?.image || 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80';
-  const pol2Img = polaroid2?.image || 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=400&q=80';
+  const mainImg = (main?.image && !main.image.includes('unsplash')) ? main.image : '/uploads/products/phone-charm-pastel-tulip.jpg';
+  const pol1Img = (polaroid1?.image && !polaroid1.image.includes('unsplash')) ? polaroid1.image : '/uploads/products/flower-bell-charms.jpg';
+  const pol2Img = (polaroid2?.image && !polaroid2.image.includes('unsplash')) ? polaroid2.image : '/uploads/products/miniature-panda-bamboo-set.jpg';
 
   return (
     <section className="relative min-h-[94vh] flex items-center justify-center pt-32 pb-20 overflow-hidden gradient-mesh-bg">
@@ -109,52 +109,43 @@ export const HeroCinematic = () => {
               {/* Decorative Glowing Backdrop Disk */}
               <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-[#F4D2BE] via-[#E8D49A] to-[#C9BDD8] blur-2xl opacity-70 animate-pulse-slow" />
 
-              {/* Central Primary Product Frame */}
-              <div className="relative z-20 w-4/5 aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
+              {/* Central Primary Product Frame — Static Image, No Hover Animation */}
+              <div className="relative z-20 w-4/5 aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2">
                 <img
                   src={mainImg}
                   alt={main?.title || 'Customized Phone Charms'}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80';
-                  }}
+                  className="w-full h-full object-cover block"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#332822]/80 via-[#332822]/20 to-transparent flex flex-col justify-end p-5 text-[#F8E8D5]">
                   <span className="text-[10px] font-bold tracking-widest text-[#E8D49A] uppercase">
                     {main?.tag || 'Bestselling Charm'}
                   </span>
-                  <p className="font-display font-bold text-base">{main?.title || 'Custom Name Pastel Lanyard'}</p>
+                  <p className="font-display font-bold text-base">{main?.title || 'Pastel Beaded Tulip Phone Charm'}</p>
                   <p className="text-xs text-[#D9A99A]">{main?.subtitle || 'from ₹149'}</p>
                 </div>
               </div>
 
-              {/* Floating Top-Right Mini Card with Glass Tag */}
-              <div className="absolute -top-3 -right-3 z-30 w-36 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-white transform rotate-6 animate-float hover:rotate-0 transition-transform duration-300">
+              {/* Top-Right Mini Card with Glass Tag — Static */}
+              <div className="absolute -top-3 -right-3 z-30 w-36 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-white transform rotate-6">
                 <img
                   src={pol1Img}
                   alt={polaroid1?.title || 'Friendship Bracelet'}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80';
-                  }}
+                  className="w-full h-full object-cover block"
                 />
                 <div className="absolute bottom-1.5 right-1.5 px-2 py-0.5 bg-[#332822]/85 backdrop-blur-md rounded-full text-[9px] text-white font-bold shadow-xs">
-                  {polaroid1?.title ? polaroid1.title.slice(0, 14) : '₹99 Set'}
+                  {polaroid1?.title ? polaroid1.title.slice(0, 14) : 'Charm Lanyard'}
                 </div>
               </div>
 
-              {/* Floating Bottom-Left Mini Card */}
-              <div className="absolute -bottom-6 -left-3 z-30 w-40 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-white transform -rotate-6 animate-float-reverse hover:rotate-0 transition-transform duration-300">
+              {/* Bottom-Left Mini Card — Static */}
+              <div className="absolute -bottom-6 -left-3 z-30 w-40 aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-white transform -rotate-6">
                 <img
                   src={pol2Img}
-                  alt={polaroid2?.title || 'Mini Keychain'}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=400&q=80';
-                  }}
+                  alt={polaroid2?.title || 'Mini Desk Buddy'}
+                  className="w-full h-full object-cover block"
                 />
                 <div className="absolute bottom-2 left-2 px-2.5 py-0.5 bg-[#B96F58] text-[#F8E8D5] rounded-full text-[9px] font-bold shadow-xs">
-                  {polaroid2?.title ? polaroid2.title.slice(0, 14) : 'Resin Shakers'}
+                  {polaroid2?.title ? polaroid2.title.slice(0, 14) : 'Desk Buddy'}
                 </div>
               </div>
 

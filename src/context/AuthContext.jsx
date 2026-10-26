@@ -2,68 +2,49 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-const DEFAULT_USER = {
-  id: "usr-01",
-  name: "Aanya Sharma",
-  email: "aanya@example.com",
-  phone: "+91 98420 13465",
-  role: "CUSTOMER", // CUSTOMER | WHOLESALE | ADMIN
-  wholesaleTier: null,
-  addresses: [
-    {
-      id: "addr-1",
-      name: "Aanya Sharma",
-      phone: "+91 98420 13465",
-      street: "Flat 402, Bloom Residency, 12th Main, Indiranagar",
-      city: "Bengaluru",
-      state: "Karnataka",
-      pincode: "560038",
-      isDefault: true
-    }
-  ],
-  orders: [
-    {
-      id: "ORD-98214",
-      date: "2026-08-24",
-      status: "Delivered",
-      total: 447,
-      items: [
-        { name: "Custom Name Pastel Phone Charm", quantity: 1, price: 149, customization: { name: "AANYA", color: "Pastel Lavender" } },
-        { name: "DIY Bead Jewellery & Phone Charm Making Kit", quantity: 1, price: 399 }
-      ],
-      tracking: {
-        courier: "BlueDart Express",
-        trackingNumber: "BD982149812IN",
-        steps: [
-          { status: "Confirmed", date: "24 Aug, 10:30 AM", done: true },
-          { status: "Processing & Customizing", date: "24 Aug, 02:15 PM", done: true },
-          { status: "Packed in Gift Box", date: "25 Aug, 11:00 AM", done: true },
-          { status: "Shipped", date: "25 Aug, 06:45 PM", done: true },
-          { status: "Out for Delivery", date: "27 Aug, 09:00 AM", done: true },
-          { status: "Delivered", date: "27 Aug, 02:40 PM", done: true }
-        ]
-      }
-    }
-  ]
-};
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
       const saved = localStorage.getItem('giftpocket_user');
-      if (!saved) return DEFAULT_USER;
+      if (!saved) return null;
       const parsed = JSON.parse(saved);
-      return parsed && typeof parsed === 'object' ? { ...DEFAULT_USER, ...parsed, orders: Array.isArray(parsed.orders) ? parsed.orders : DEFAULT_USER.orders, addresses: Array.isArray(parsed.addresses) ? parsed.addresses : DEFAULT_USER.addresses } : DEFAULT_USER;
+      if (parsed && typeof parsed === 'object') {
+        // If it's the legacy mock user, purge it
+        if (parsed.id === 'usr-01' || parsed.name === 'Aanya Sharma' || parsed.email === 'aanya@example.com') {
+          localStorage.removeItem('giftpocket_user');
+          return null;
+        }
+        const userOrders = Array.isArray(parsed.orders)
+          ? parsed.orders.filter(o => o.id !== 'ORD-98214')
+          : [];
+        return {
+          ...parsed,
+          orders: userOrders,
+          addresses: Array.isArray(parsed.addresses) ? parsed.addresses : []
+        };
+      }
+      return null;
     } catch {
-      return DEFAULT_USER;
+      return null;
     }
   });
 
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      const saved = localStorage.getItem('giftpocket_user');
+      if (!saved) return false;
+      const parsed = JSON.parse(saved);
+      return !!(parsed && parsed.id !== 'usr-01' && parsed.email !== 'aanya@example.com');
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     if (user) {
       localStorage.setItem('giftpocket_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('giftpocket_user');
     }
   }, [user]);
 
@@ -116,7 +97,7 @@ export const AuthProvider = ({ children }) => {
       id: "usr-" + Math.floor(Math.random() * 10000),
       name: email.split('@')[0].toUpperCase(),
       email,
-      phone: "+91 98420 13465",
+      phone: "",
       role: "CUSTOMER",
       wholesaleTier: null,
       addresses: [],

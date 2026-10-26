@@ -43,11 +43,17 @@ export const CustomerLoveTestimonials = () => {
 
               {/* Customer Info */}
               <div className="flex items-center gap-3 pt-4 border-t border-[#D9A99A]/30">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  className="w-11 h-11 rounded-full object-cover border-2 border-[#B96F58]/30"
-                />
+                {t.avatar ? (
+                  <img
+                    src={t.avatar}
+                    alt={t.name}
+                    className="w-11 h-11 rounded-full object-cover border-2 border-[#B96F58]/30"
+                  />
+                ) : (
+                  <div className="w-11 h-11 rounded-full bg-[#B96F58] text-[#F8E8D5] flex items-center justify-center font-display font-bold text-sm shadow-xs shrink-0">
+                    {t.name ? t.name.charAt(0) : '♡'}
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
                     <h4 className="font-display font-bold text-sm text-[#332822]">

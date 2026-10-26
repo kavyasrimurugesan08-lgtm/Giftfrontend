@@ -9,7 +9,7 @@ export const CATEGORIES = [
     icon: "Sparkles",
     color: "#F4D2BE",
     textColor: "#6F5145",
-    image: "/images/products/bag-charms.jpg",
+    image: "/uploads/products/enamel-mini-phone-charms.png",
     itemCount: 24
   },
   {
@@ -20,7 +20,7 @@ export const CATEGORIES = [
     icon: "Heart",
     color: "#C9BDD8",
     textColor: "#332822",
-    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/lavender-crystal-flower-bracelet.jpg",
     itemCount: 18
   },
   {
@@ -31,7 +31,7 @@ export const CATEGORIES = [
     icon: "Key",
     color: "#B9C5A0",
     textColor: "#332822",
-    image: "/images/products/keychains.jpg",
+    image: "",
     itemCount: 32
   },
   {
@@ -42,7 +42,7 @@ export const CATEGORIES = [
     icon: "Scissors",
     color: "#D9A99A",
     textColor: "#332822",
-    image: "/images/products/hair-accessories.jpg",
+    image: "/uploads/products/ethnic-kundan-hair-ties.jpg",
     itemCount: 15
   },
   {
@@ -53,7 +53,7 @@ export const CATEGORIES = [
     icon: "Smile",
     color: "#E8D49A",
     textColor: "#6F5145",
-    image: "/images/products/miniature-toys.jpg",
+    image: "/uploads/products/miniature-couple-character-figurines.png",
     itemCount: 20
   },
   {
@@ -64,7 +64,7 @@ export const CATEGORIES = [
     icon: "Moon",
     color: "#67949A",
     textColor: "#F8E8D5",
-    image: "/images/products/radium-toys.jpg",
+    image: "",
     itemCount: 12
   },
   {
@@ -75,7 +75,7 @@ export const CATEGORIES = [
     icon: "Gem",
     color: "#F8E8D5",
     textColor: "#332822",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80",
+    image: "",
     itemCount: 14
   },
   {
@@ -86,7 +86,7 @@ export const CATEGORIES = [
     icon: "Palette",
     color: "#E8D49A",
     textColor: "#6F5145",
-    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80",
+    image: "",
     itemCount: 9
   },
   {
@@ -97,7 +97,7 @@ export const CATEGORIES = [
     icon: "Compass",
     color: "#F4D2BE",
     textColor: "#6F5145",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80",
+    image: "",
     itemCount: 22
   },
   {
@@ -108,8 +108,19 @@ export const CATEGORIES = [
     icon: "Gift",
     color: "#B96F58",
     textColor: "#F8E8D5",
-    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80",
+    image: "",
     itemCount: 16
+  },
+  {
+    id: "jumkas",
+    name: "Jumkas",
+    slug: "jumkas",
+    description: "Handcrafted traditional bells, terracotta jumkas, oxidized earrings, and festive drops.",
+    icon: "Sparkles",
+    color: "#E8D49A",
+    textColor: "#332822",
+    image: "/uploads/products/earrings-silver-jhumka.jpg",
+    itemCount: 14
   }
 ];
 
@@ -120,7 +131,7 @@ export const MOODS = [
     subtitle: "Make their special day sparkle",
     color: "#F4D2BE",
     tag: "Celebration",
-    image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/pastel-flower-claw-clip-set.jpg",
     filter: "birthday"
   },
   {
@@ -129,7 +140,7 @@ export const MOODS = [
     subtitle: "Matching charms & secret notes",
     color: "#C9BDD8",
     tag: "Friendship",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/flower-bell-charms.jpg",
     filter: "bestie"
   },
   {
@@ -138,7 +149,7 @@ export const MOODS = [
     subtitle: "Magnetic pairs & initials",
     color: "#D9A99A",
     tag: "Love & Romance",
-    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/phone-charm-pastel-tulip.jpg",
     filter: "couple"
   },
   {
@@ -147,7 +158,7 @@ export const MOODS = [
     subtitle: "Tiny spontaneous pick-me-ups",
     color: "#B9C5A0",
     tag: "Surprise",
-    image: "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/miniature-panda-bamboo-set.jpg",
     filter: "cute"
   },
   {
@@ -156,7 +167,7 @@ export const MOODS = [
     subtitle: "Under ₹99 everyday magic",
     color: "#E8D49A",
     tag: "Budget Friendly",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/earrings-silver-jhumka.jpg",
     filter: "budget"
   },
   {
@@ -165,7 +176,7 @@ export const MOODS = [
     subtitle: "Bulk party favors kids love",
     color: "#67949A",
     tag: "Bulk & Wholesale",
-    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80",
+    image: "/uploads/products/miniature-panda-bamboo-set.jpg",
     filter: "bulk"
   }
 ];
@@ -198,8 +209,7 @@ export const PRODUCTS = [
     weight: "25 grams",
     care: "Wipe with a soft dry cloth. Keep away from harsh chemicals.",
     images: [
-      "/images/products/bag-charms.jpg",
-      "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80"
+      "/uploads/products/phone-charm-pastel-tulip.jpg"
     ],
     tags: ["bag-charm", "custom", "flower-charm", "bestseller", "gifts-for-her"],
     customizerSchema: {
@@ -247,8 +257,7 @@ export const PRODUCTS = [
     weight: "18 grams",
     care: "Do not pull forcefully.",
     images: [
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80"
+      "/uploads/products/flower-bell-charms.jpg"
     ],
     tags: ["daisy", "phone-charm", "floral", "cute"]
   },
@@ -279,8 +288,7 @@ export const PRODUCTS = [
     weight: "12 grams",
     care: "Water resistant. Safe for daily wear.",
     images: [
-      "https://images.unsplash.com/photo-1611591475152-4735d387e982?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80"
+      "/uploads/products/flower-bell-charms.jpg"
     ],
     tags: ["friendship", "bracelets", "besties", "handmade"]
   },
@@ -311,8 +319,7 @@ export const PRODUCTS = [
     weight: "20 grams",
     care: "Keep magnetic charms clean.",
     images: [
-      "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1611591475152-4735d387e982?auto=format&fit=crop&w=800&q=80"
+      "/uploads/products/flower-bell-charms.jpg"
     ],
     tags: ["couple", "love", "magnetic", "gifts-for-him", "gifts-for-her"],
     customizerSchema: {
@@ -351,10 +358,7 @@ export const PRODUCTS = [
     size: "10 cm strap length",
     weight: "25 grams",
     care: "Wipe clean with a damp cloth.",
-    images: [
-      "/images/products/keychains.jpg",
-      "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["keychain", "cartoon", "straps", "cute", "capybara"]
   },
   {
@@ -383,10 +387,7 @@ export const PRODUCTS = [
     size: "3.5 cm",
     weight: "15 grams",
     care: "Keep away from high heat.",
-    images: [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["food-keychain", "boba", "croissant", "clay", "cute"]
   },
   {
@@ -416,8 +417,7 @@ export const PRODUCTS = [
     weight: "25 grams",
     care: "Store in a dry vanity pouch.",
     images: [
-      "/images/products/hair-accessories.jpg",
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
+      "/uploads/products/pastel-flower-claw-clip-set.jpg"
     ],
     tags: ["hair-clip", "accessories", "floral", "claw-clip"]
   },
@@ -448,8 +448,7 @@ export const PRODUCTS = [
     weight: "18 grams each",
     care: "Wipe with a soft cloth.",
     images: [
-      "/images/products/miniature-toys.jpg",
-      "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=800&q=80"
+      "/uploads/products/miniature-panda-bamboo-set.jpg"
     ],
     tags: ["panda", "miniature", "desk-decor", "toy", "cute"]
   },
@@ -479,10 +478,7 @@ export const PRODUCTS = [
     size: "2.5 cm - 3.5 cm",
     weight: "10 grams each",
     care: "Rechargeable under sunlight or flashlight indefinitely.",
-    images: [
-      "/images/products/radium-toys.jpg",
-      "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["radium", "glow-in-the-dark", "miniature", "toys", "glowing"]
   },
   {
@@ -511,10 +507,7 @@ export const PRODUCTS = [
     size: "38 cm + 5 cm extension chain",
     weight: "5 grams",
     care: "Store flat to prevent kinking.",
-    images: [
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["invisible-jewellery", "crystal", "necklace", "minimalist"]
   },
   {
@@ -543,16 +536,13 @@ export const PRODUCTS = [
     size: "17 cm x 10 cm x 2.2 cm organizer box",
     weight: "210 grams",
     care: "Contains small parts. Recommended age 6+.",
-    images: [
-      "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["diy-kit", "crafts", "beads", "starter-set", "creative"]
   },
   {
     id: "gp-012",
-    name: "Handcrafted Ceramic Cute Toast Fridge Magnet",
-    slug: "handcrafted-ceramic-cute-toast-fridge-magnet",
+    name: "Handcrafted Baby Krishna Lotus Keepsake Fridge Magnet",
+    slug: "handcrafted-baby-krishna-lotus-fridge-magnet",
     category: "fridge-magnets",
     price: 79,
     originalPrice: 120,
@@ -563,22 +553,19 @@ export const PRODUCTS = [
       { minQty: 80, price: 33 },
       { minQty: 200, price: 28 }
     ],
-    rating: 4.8,
+    rating: 4.9,
     reviewCount: 65,
     badge: "UNDER ₹99",
     isCustomizable: false,
     isWholesale: true,
     inStock: true,
     stock: 390,
-    description: "Smile-faced buttered toast 3D ceramic fridge magnet with a strong neodymium magnetic back. Holds up to 5 sheets of paper easily.",
-    material: "Glazed Ceramic, Neodymium Magnet",
-    size: "4 cm x 4 cm",
-    weight: "30 grams",
-    care: "Fragile if dropped on tile floor.",
-    images: [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80"
-    ],
+    description: "Cute handcrafted Baby Krishna seated on blooming pink lotus with peacock feathers. High-gloss protected finish with strong neodymium magnetic back.",
+    material: "Wood Cutout, Gloss Finish, Neodymium Magnet",
+    size: "6 cm x 6 cm",
+    weight: "25 grams",
+    care: "Wipe with soft cloth. Avoid soaking in water.",
+    images: [],
     tags: ["magnet", "fridge", "toast", "home-decor", "kitchen"]
   },
   {
@@ -607,10 +594,7 @@ export const PRODUCTS = [
     size: "20 cm x 15 cm x 5 cm box",
     weight: "320 grams",
     care: "Ready-to-gift packaging.",
-    images: [
-      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["gift-set", "birthday", "hamper", "personalized", "custom"],
     customizerSchema: {
       type: "gift-set",
@@ -648,10 +632,7 @@ export const PRODUCTS = [
     size: "18 cm x 12 cm box",
     weight: "240 grams",
     care: "Gift ready.",
-    images: [
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["bestie", "bff", "gift-set", "matching"]
   },
   {
@@ -680,10 +661,7 @@ export const PRODUCTS = [
     size: "Aesthetic Kraft Gift Box",
     weight: "260 grams",
     care: "Handle wax seal gently.",
-    images: [
-      "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80"
-    ],
+    images: [],
     tags: ["couple", "combo", "anniversary", "love-story"],
     customizerSchema: {
       type: "couple-combo",
@@ -693,6 +671,332 @@ export const PRODUCTS = [
         { name: "Earthy Terracotta & Cream", hex: "#B96F58" }
       ]
     }
+  }
+,
+  {
+    "id": "gp-016",
+    "name": "Handcrafted Silver Bell Jumka Earrings",
+    "slug": "handcrafted-silver-bell-jumka-earrings",
+    "category": "jumkas",
+    "price": 149,
+    "originalPrice": 220,
+    "wholesalePrice": 85,
+    "moq": 15,
+    "wholesaleTiers": [
+      {
+        "minQty": 15,
+        "price": 85
+      },
+      {
+        "minQty": 40,
+        "price": 75
+      },
+      {
+        "minQty": 100,
+        "price": 65
+      }
+    ],
+    "rating": 4.9,
+    "reviewCount": 118,
+    "badge": "FESTIVE FAVORITE",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 260,
+    "description": "Traditional oxidized silver-tone jhumka bell earrings with delicate filigree detailing and tiny acoustic bells for ethnic outfits and festive occasions.",
+    "material": "Oxidized German Silver Alloy, Tiny Ghungroo Bells",
+    "size": "4.5 cm drop length",
+    "weight": "22 grams",
+    "care": "Store in an airtight ziplock pouch. Keep away from water and perfumes.",
+    "images": [
+      "/uploads/products/earrings-silver-jhumka.jpg"
+    ],
+    "tags": [
+      "earrings",
+      "jumkas",
+      "traditional",
+      "oxidized",
+      "festive"
+    ]
+  },
+  {
+    "id": "gp-017",
+    "name": "Aesthetic Enamel Icon Phone Charm Straps",
+    "slug": "aesthetic-enamel-icon-phone-charm-straps",
+    "category": "phone-charms",
+    "price": 139,
+    "originalPrice": 199,
+    "wholesalePrice": 75,
+    "moq": 20,
+    "wholesaleTiers": [
+      {
+        "minQty": 20,
+        "price": 75
+      },
+      {
+        "minQty": 50,
+        "price": 65
+      },
+      {
+        "minQty": 100,
+        "price": 55
+      }
+    ],
+    "rating": 4.9,
+    "reviewCount": 88,
+    "badge": "NEW ARRIVAL",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 320,
+    "description": "Delicate gold-trimmed enamel phone charms with aesthetic pendants including coffee cup, sneaker, retro camera, moon, yin-yang, and lucky clover.",
+    "material": "Enamel Inlay, Gold-Tone Zinc Alloy, Braided Black Lanyard Cord",
+    "size": "8 cm strap length",
+    "weight": "12 grams",
+    "care": "Wipe with a soft dry cloth.",
+    "images": [
+      "/uploads/products/enamel-mini-phone-charms.png"
+    ],
+    "tags": [
+      "phone-charms",
+      "enamel",
+      "camera",
+      "coffee",
+      "aesthetic",
+      "straps"
+    ]
+  },
+  {
+    "id": "gp-018",
+    "name": "Handcrafted Kundan Floral Hair Ties & Scrunchies",
+    "slug": "handcrafted-kundan-floral-hair-ties",
+    "category": "hair-accessories",
+    "price": 179,
+    "originalPrice": 249,
+    "wholesalePrice": 95,
+    "moq": 15,
+    "wholesaleTiers": [
+      {
+        "minQty": 15,
+        "price": 95
+      },
+      {
+        "minQty": 35,
+        "price": 85
+      },
+      {
+        "minQty": 80,
+        "price": 75
+      }
+    ],
+    "rating": 4.9,
+    "reviewCount": 94,
+    "badge": "HANDCRAFTED",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 240,
+    "description": "Exquisite ethnic Kundan and vibrant multi-stone floral medallion hair ties, perfect for festive hair styling, weddings, and traditional elegance.",
+    "material": "Kundan Stones, Multicolor Meenakari Embellishments, High-Elastic Black Band",
+    "size": "4 cm medallion diameter",
+    "weight": "20 grams",
+    "care": "Store in a dry velvet pouch.",
+    "images": [
+      "/uploads/products/ethnic-kundan-hair-ties.jpg"
+    ],
+    "tags": [
+      "hair-accessories",
+      "kundan",
+      "ethnic",
+      "hair-ties",
+      "festive"
+    ]
+  },
+  {
+    "id": "gp-019",
+    "name": "Lavender Crystal & Daisy Charm Bracelet",
+    "slug": "lavender-crystal-daisy-charm-bracelet",
+    "category": "bracelets",
+    "price": 199,
+    "originalPrice": 299,
+    "wholesalePrice": 110,
+    "moq": 15,
+    "wholesaleTiers": [
+      {
+        "minQty": 15,
+        "price": 110
+      },
+      {
+        "minQty": 40,
+        "price": 98
+      },
+      {
+        "minQty": 80,
+        "price": 88
+      }
+    ],
+    "rating": 5,
+    "reviewCount": 142,
+    "badge": "BESTSELLER",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 190,
+    "description": "Dreamy crackle quartz lavender crystal bead bracelet accented with gold spacer beads, faceted champagne crystal droplet, and purple daisy enamel charm.",
+    "material": "Crackle Quartz Beads, Enamel Daisy Charm, Elastic Stretch Cord",
+    "size": "17 cm stretch fit",
+    "weight": "28 grams",
+    "care": "Avoid moisture and perfumes for lasting shine.",
+    "images": [
+      "/uploads/products/lavender-crystal-flower-bracelet.jpg"
+    ],
+    "tags": [
+      "bracelets",
+      "lavender",
+      "crystal",
+      "daisy",
+      "pastel",
+      "beaded"
+    ]
+  },
+  {
+    "id": "gp-020",
+    "name": "Pastel Enamel Rainbow Gold Link Bracelet",
+    "slug": "pastel-enamel-rainbow-gold-link-bracelet",
+    "category": "bracelets",
+    "price": 219,
+    "originalPrice": 320,
+    "wholesalePrice": 125,
+    "moq": 12,
+    "wholesaleTiers": [
+      {
+        "minQty": 12,
+        "price": 125
+      },
+      {
+        "minQty": 30,
+        "price": 110
+      },
+      {
+        "minQty": 60,
+        "price": 99
+      }
+    ],
+    "rating": 4.9,
+    "reviewCount": 105,
+    "badge": "CHARM SPECIAL",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 180,
+    "description": "Charming gold-tone link chain loaded with whimsical charms: heart padlock, butterfly, rainbow cloud, and pastel floral petals.",
+    "material": "Gold-Plated Alloy, Pastel Enamel Charms, Lobster Claw Clasp",
+    "size": "18 cm + 5 cm extension chain",
+    "weight": "24 grams",
+    "care": "Wipe with a soft cotton cloth after use.",
+    "images": [
+      "/uploads/products/gold-charm-link-bracelet.png"
+    ],
+    "tags": [
+      "bracelets",
+      "charm-bracelet",
+      "gold-link",
+      "rainbow",
+      "heart-lock"
+    ]
+  },
+  {
+    "id": "gp-021",
+    "name": "Miniature Glass Flower Bouquet Desk Vases",
+    "slug": "miniature-glass-flower-bouquet-desk-vases",
+    "category": "miniature-toys",
+    "price": 169,
+    "originalPrice": 249,
+    "wholesalePrice": 89,
+    "moq": 15,
+    "wholesaleTiers": [
+      {
+        "minQty": 15,
+        "price": 89
+      },
+      {
+        "minQty": 35,
+        "price": 79
+      },
+      {
+        "minQty": 80,
+        "price": 69
+      }
+    ],
+    "rating": 5,
+    "reviewCount": 120,
+    "badge": "DESK MAGIC",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 220,
+    "description": "Adorable handcrafted miniature glass flower bouquet arrangements in crystal bottles. A cheerful aesthetic pocket desk buddy and keepsake gift.",
+    "material": "Borosilicate Glass Bottle, Resin Crystal Petals & Stems",
+    "size": "3.5 cm height x 1.8 cm diameter",
+    "weight": "16 grams",
+    "care": "Handle with love. Keep on a stable desk surface.",
+    "images": [
+      "/uploads/products/miniature-glass-flower-vases.jpg"
+    ],
+    "tags": [
+      "miniature-toys",
+      "glass-flowers",
+      "desk-decor",
+      "pocket-keepsake",
+      "cute"
+    ]
+  },
+  {
+    "id": "gp-022",
+    "name": "Miniature Romantic Couple & Cute Character Figurines",
+    "slug": "miniature-romantic-couple-cute-character-figurines",
+    "category": "miniature-toys",
+    "price": 189,
+    "originalPrice": 279,
+    "wholesalePrice": 99,
+    "moq": 12,
+    "wholesaleTiers": [
+      {
+        "minQty": 12,
+        "price": 99
+      },
+      {
+        "minQty": 30,
+        "price": 89
+      },
+      {
+        "minQty": 60,
+        "price": 79
+      }
+    ],
+    "rating": 5,
+    "reviewCount": 142,
+    "badge": "COUPLE KEEPSAKE",
+    "isCustomizable": false,
+    "isWholesale": true,
+    "inStock": true,
+    "stock": 180,
+    "description": "Adorable handcrafted miniature romantic couple & cartoon character figurines. Featuring cute pairs on scooters, royal wedding duos, cozy animal hoods, and romantic keepsakes for car dashboards, study desks, and anniversary gifting.",
+    "material": "Hand-Painted Eco Resin & Ceramic Polymer",
+    "size": "4.5 cm to 6.5 cm height",
+    "weight": "35 grams",
+    "care": "Wipe with a soft dry cloth. Place on flat study desk or car dashboard.",
+    "images": [
+      "/uploads/products/miniature-couple-character-figurines.png"
+    ],
+    "tags": [
+      "miniature-toys",
+      "couple-figurines",
+      "desk-decor",
+      "car-dashboard",
+      "romantic-gifts",
+      "cute-dolls"
+    ]
   }
 ];
 
@@ -704,7 +1008,7 @@ export const TESTIMONIALS = [
     rating: 5,
     review: "The custom phone charm with my name 'ANANYA' is even cuter in person! The pastel beads look so aesthetic on my phone case. Received compliments all day at college!",
     productName: "Custom Name Pastel Phone Charm",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
+    avatar: ""
   },
   {
     id: 2,
@@ -713,7 +1017,7 @@ export const TESTIMONIALS = [
     rating: 5,
     review: "We ordered the magnetic couple bracelets for our anniversary. The little magnetic click when our hands brush is the sweetest detail. Packaging was 10/10!",
     productName: "Magnetic Attraction Couple Bracelets",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80"
+    avatar: ""
   },
   {
     id: 3,
@@ -722,7 +1026,7 @@ export const TESTIMONIALS = [
     rating: 5,
     review: "I run a boutique stationary & gift stall. I bought 50 pcs wholesale of the mini food keychains and radium astronauts — they sold out in 3 days! Outstanding wholesale margins.",
     productName: "Wholesale Partner (Silver Tier)",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80"
+    avatar: ""
   }
 ];
 

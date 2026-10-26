@@ -20,8 +20,8 @@ export const ColorStoryChapter = () => {
       accentColor: "#FAF8F5",
       textColor: "#FFFFFF",
       headline: "Fashion that feels good and does good",
-      description: "Hand-braided olive sage cords with magnetic bells that click together whenever hands meet. A timeless keepsake.",
-      image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
+      description: "Hand-braided olive sage cords with floral bell charms that chime softly. A timeless keepsake.",
+      image: "/uploads/products/flower-bell-charms.jpg",
       priceRange: "from ₹99"
     },
     {
@@ -35,39 +35,39 @@ export const ColorStoryChapter = () => {
       accentColor: "#C97D67",
       textColor: "#1A1816",
       headline: "Throwback vintage trends reimagined",
-      description: "Dainty sandstone pearls, iridescent sphere beads, and durable cords that turn your smartphone into a work of art.",
-      image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80",
+      description: "Dainty pastel beads, iridescent tulip stems, and durable cords that turn your smartphone into a work of art.",
+      image: "/uploads/products/phone-charm-pastel-tulip.jpg",
       priceRange: "from ₹129"
     },
     {
       id: "ochre",
       title: "Ochre Honey & Clay Miniatures",
-      subtitle: "Pocket-Sized Resin Shakers & 3D Food Miniatures",
+      subtitle: "Pocket-Sized Zen Figurines & Panda Companions",
       name: "Ochre Gold",
-      categoryName: "Miniature Keychains",
-      slug: "keychains",
+      categoryName: "Miniature Toys",
+      slug: "miniature-toys",
       bgColor: "#D69E4A",
       accentColor: "#1A1816",
       textColor: "#1A1816",
       headline: "Pocket-sized treasures with personality",
-      description: "Tiny hand-painted resin keepsakes, laser-engraved typography tags, and honey amber charms for your keys.",
-      image: "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80",
+      description: "Tiny hand-painted panda figurines, green bamboo stalks, and serene desk companions.",
+      image: "/uploads/products/miniature-panda-bamboo-set.jpg",
       priceRange: "from ₹79"
     },
     {
       id: "terracotta",
-      title: "Terracotta Blush & Keepsake Hampers",
+      title: "Terracotta Blush & Floral Keepsakes",
       subtitle: "Warm earthy tones curated for heartfelt celebrations",
       name: "Terracotta Clay",
-      categoryName: "Gift Hampers",
-      slug: "gift-sets",
+      categoryName: "Hair Accessories",
+      slug: "hair-accessories",
       bgColor: "#C97D67",
       accentColor: "#FAF8F5",
       textColor: "#FFFFFF",
-      headline: "Curated gift sets ready to delight",
-      description: "Pre-packed luxury hampers wrapped in satin ribbons with personalized note cards for someone special.",
-      image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
-      priceRange: "from ₹399"
+      headline: "Curated floral treasures ready to delight",
+      description: "Pastel flower claw clips, daisy hair barrettes, and aesthetic pins crafted to elevate everyday style.",
+      image: "/uploads/products/pastel-flower-claw-clip-set.jpg",
+      priceRange: "from ₹129"
     }
   ];
 
@@ -141,17 +141,18 @@ export const ColorStoryChapter = () => {
             </div>
           </div>
 
-          {/* Chapter Image Card (6 Cols) */}
+          {/* Chapter Image Card (6 Cols) — Static Frame */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform hover:scale-102 transition-transform duration-500">
-              <img
-                src={current.image}
-                alt={current.title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.src = 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80';
-                }}
-              />
+            <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center bg-white/40">
+              {current.image ? (
+                <img
+                  src={current.image}
+                  alt={current.title}
+                  className="w-full h-full object-cover block"
+                />
+              ) : (
+                <div className="w-full h-full bg-white/20" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
                 <span className="text-white text-xs font-black tracking-widest uppercase bg-black/40 px-3 py-1 rounded-full backdrop-blur-md">
                   Lookbook Feature 0{activeChapter + 1}

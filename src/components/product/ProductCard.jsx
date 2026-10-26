@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Eye, ShoppingBag, Sparkles, Star } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 
 export const ProductCard = ({ product, onQuickView }) => {
-  const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
 
@@ -20,12 +19,14 @@ export const ProductCard = ({ product, onQuickView }) => {
     ? Math.round(((origPrice - price) / origPrice) * 100)
     : 0;
 
-  const images = Array.isArray(product.images) && product.images.length > 0
-    ? product.images
-    : (product.image ? [product.image] : ['https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80']);
-  
-  const mainImage = images[0];
-  const hoverImage = images[1] || images[0];
+  // Single primary image only - no secondary images, no hover flips, no random/stock defaults
+  const primaryImage = (Array.isArray(product.images) && product.images[0]) || product.image || '';
+  const [imgError, setImgError] = React.useState(false);
+
+  React.useEffect(() => {
+    setImgError(false);
+  }, [primaryImage]);
+
   const categoryName = (product.category || 'Charms & Keepsakes').replace('-', ' ');
   const productSlug = product.slug || product.id || 'product';
 
@@ -42,11 +43,9 @@ export const ProductCard = ({ product, onQuickView }) => {
   return (
     <div
       className="group relative bg-[#FAF8F5] hover:bg-white rounded-3xl p-3 sm:p-4 border border-[#D4C9BA] hover:border-[#C97D67]/60 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top Image Container */}
-      <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#DFD7CB]/40 mb-3.5 border border-[#D4C9BA]/60">
+      <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#DFD7CB]/40 mb-3.5 border border-[#D4C9BA]/60 flex items-center justify-center">
         
         {/* Badges */}
         <div className="absolute top-2.5 left-2.5 z-10 flex flex-col gap-1">
@@ -79,17 +78,22 @@ export const ProductCard = ({ product, onQuickView }) => {
           <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
         </button>
 
-        {/* Product Image with Hover Flip */}
+        {/* Static Product Primary Image — Strictly no hover image switching or animation */}
         <Link to={`/product/${productSlug}`} className="block w-full h-full">
-          <img
-            src={isHovered ? hoverImage : mainImage}
-            alt={product.name || 'GIFTPocket Item'}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-            loading="lazy"
-            onError={(e) => {
-              e.target.src = 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80';
-            }}
-          />
+          {primaryImage && !imgError ? (
+            <img
+              src={primaryImage}
+              alt={product.name || 'GIFTPocket Item'}
+              className="w-full h-full object-cover block select-none pointer-events-none"
+              loading="lazy"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-[#EDE8E1]/50 text-[#7D746B]">
+              <ShoppingBag className="w-8 h-8 opacity-35 mb-1.5" />
+              <span className="text-[10px] font-bold tracking-wider uppercase opacity-60">Awaiting Photo</span>
+            </div>
+          )}
         </Link>
 
         {/* Quick View Button on Hover */}

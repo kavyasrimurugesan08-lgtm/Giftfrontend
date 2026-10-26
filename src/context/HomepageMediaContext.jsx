@@ -3,14 +3,21 @@ import { INITIAL_HOMEPAGE_MEDIA } from '../data/homepageMedia';
 
 const HomepageMediaContext = createContext();
 
-const STORAGE_KEY = 'giftpocket_homepage_media_v1';
+const STORAGE_KEY = 'giftpocket_homepage_media_v3';
 
 export const HomepageMediaProvider = ({ children }) => {
   const [mediaList, setMediaList] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // If any unsplash image is detected, throw out old cache and use INITIAL_HOMEPAGE_MEDIA
+          const hasUnsplash = parsed.some(m => m.image && m.image.includes('unsplash'));
+          if (!hasUnsplash) {
+            return parsed;
+          }
+        }
       }
     } catch (e) {
       console.error('Error reading homepage media from storage', e);

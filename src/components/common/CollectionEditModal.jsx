@@ -3,14 +3,11 @@ import { useCollections } from '../../context/CollectionsContext';
 import { X, Upload, Sparkles, Check, Trash2, Palette, Image as ImageIcon, Link as LinkIcon } from 'lucide-react';
 
 const PRESET_IMAGES = [
-  { label: 'Radium & Glow Toys', url: '/images/products/radium-toys.jpg' },
-  { label: 'Keychains', url: '/images/products/keychains.jpg' },
-  { label: 'Miniature Toys', url: '/images/products/miniature-toys.jpg' },
-  { label: 'Hair Accessories', url: '/images/products/hair-accessories.jpg' },
-  { label: 'Bag Charms', url: '/images/products/bag-charms.jpg' },
-  { label: 'Friendship Bracelets', url: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Gift Hamper Box', url: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80' },
-  { label: 'DIY Studio Kit', url: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80' }
+  { label: 'Pastel Tulip Phone Charm', url: '/uploads/products/phone-charm-pastel-tulip.jpg' },
+  { label: 'Floral Bell Charms', url: '/uploads/products/flower-bell-charms.jpg' },
+  { label: 'Silver Bell Jumkas', url: '/uploads/products/earrings-silver-jhumka.jpg' },
+  { label: 'Pastel Flower Claw Clips', url: '/uploads/products/pastel-flower-claw-clip-set.jpg' },
+  { label: 'Miniature Panda & Bamboo', url: '/uploads/products/miniature-panda-bamboo-set.jpg' }
 ];
 
 const PRESET_COLORS = [
@@ -255,7 +252,7 @@ export const CollectionEditModal = () => {
                       setCustomUrl(e.target.value);
                       setFormData({ ...formData, image: e.target.value });
                     }}
-                    placeholder="https://images.unsplash.com/..."
+                    placeholder="/uploads/products/image.jpg"
                     className="flex-1 px-3 py-2 bg-white rounded-xl border border-[#D9A99A] text-xs text-[#332822]"
                   />
                 </div>

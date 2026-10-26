@@ -29,15 +29,16 @@ export const GiftMoments = () => {
               key={m.id || idx}
               className="bg-white/80 rounded-3xl overflow-hidden border border-[#D9A99A]/50 shadow-md hover:shadow-2xl transition-all duration-500 flex flex-col justify-between group"
             >
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img
-                  src={m.image}
-                  alt={m.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=700&q=80';
-                  }}
-                />
+              <div className="aspect-[4/3] overflow-hidden relative flex items-center justify-center bg-[#F4D2BE]/20">
+                {m.image ? (
+                  <img
+                    src={m.image}
+                    alt={m.title}
+                    className="w-full h-full object-cover block"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#F4D2BE]/20" />
+                )}
                 <span className="absolute top-3 left-3 px-3 py-1 bg-[#332822]/80 backdrop-blur-xs text-[#F8E8D5] text-[10px] font-bold tracking-wider rounded-full uppercase">
                   {m.tag || 'Moment'}
                 </span>

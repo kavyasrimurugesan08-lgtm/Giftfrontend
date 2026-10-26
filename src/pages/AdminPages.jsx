@@ -58,49 +58,19 @@ export const AdminDashboard = () => {
     subtitle: '',
     section: 'hero',
     tag: '',
-    image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80',
+    image: '/images/products/bag-charms.jpg',
     link: '/shop'
   });
 
   // Admin Orders
-  const [adminOrders, setAdminOrders] = useState([
-    {
-      id: 'ORD-98214',
-      customer: 'Priya Patel',
-      email: 'priya.patel@gmail.com',
-      phone: '+91 98201 44512',
-      address: 'Flat 402, Sunshine Heights, Bandra West, Mumbai - 400050',
-      total: 447,
-      status: 'Delivered',
-      date: '2026-08-24',
-      type: 'Retail',
-      items: [{ name: 'Handcrafted Floral Bell Charm', quantity: 2, price: 149, customName: 'PRIYA' }]
-    },
-    {
-      id: 'ORD-98215',
-      customer: 'Twinkle Trinkets Store (Rohit Verma)',
-      email: 'orders@twinkletrinkets.in',
-      phone: '+91 91102 99881',
-      address: 'Shop 14, Commercial Plaza, Indiranagar, Bengaluru - 560038',
-      total: 3950,
-      status: 'Shipped',
-      date: '2026-08-28',
-      type: 'Wholesale',
-      items: [{ name: 'Floral Bell Phone Charm (Wholesale Pack)', quantity: 40, price: 65 }]
-    },
-    {
-      id: 'ORD-98216',
-      customer: 'Ananya Sharma',
-      email: 'ananya.s@outlook.com',
-      phone: '+91 98450 12389',
-      address: 'Villa 22, Green Meadows, Hyderabad - 500032',
-      total: 149,
-      status: 'Processing',
-      date: '2026-08-30',
-      type: 'Retail',
-      items: [{ name: 'Pocket Bamboo Panda Companion', quantity: 1, price: 129 }]
+  const [adminOrders, setAdminOrders] = useState(() => {
+    try {
+      localStorage.removeItem('giftpocket_admin_orders');
+    } catch {
+      // safe fallback
     }
-  ]);
+    return [];
+  });
 
   // Story CMS State
   const [storyFrames, setStoryFrames] = useState([
@@ -131,7 +101,7 @@ export const AdminDashboard = () => {
     isCustomizable: true,
     badge: 'New',
     description: '',
-    image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80'
+    image: ''
   });
 
   // Form states for Coupon Modal
@@ -143,10 +113,16 @@ export const AdminDashboard = () => {
     isActive: true
   });
 
-  // Metrics
-  const totalRevenue = 148520;
-  const todaySales = 8450;
-  const totalOrders = adminOrders.length + 339;
+  // Metrics (Dynamically computed from actual orders)
+  const totalRevenue = adminOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+  const todaySales = adminOrders.filter(o => {
+    try {
+      return new Date(o.date).toDateString() === new Date().toDateString();
+    } catch {
+      return false;
+    }
+  }).reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+  const totalOrders = adminOrders.length;
   const lowStockItems = productList.filter((p) => p.stock < 50);
 
   // Media Handlers
@@ -157,7 +133,7 @@ export const AdminDashboard = () => {
       subtitle: '',
       section: 'hero',
       tag: '',
-      image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80',
+      image: '/images/products/bag-charms.jpg',
       link: '/shop'
     });
     setIsMediaModalOpen(true);
@@ -218,7 +194,7 @@ export const AdminDashboard = () => {
       isCustomizable: true,
       badge: 'New Arrival',
       description: '',
-      image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80'
+      image: ''
     });
     setIsProductModalOpen(true);
   };
@@ -233,7 +209,7 @@ export const AdminDashboard = () => {
       isCustomizable: prod.isCustomizable || false,
       badge: prod.badge || '',
       description: prod.description || '',
-      image: prod.images?.[0] || 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80'
+      image: prod.images?.[0] || prod.image || ''
     });
     setIsProductModalOpen(true);
   };
@@ -666,7 +642,7 @@ export const AdminDashboard = () => {
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       onError={(e) => {
-                        e.target.src = 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80';
+                        e.target.src = '/images/products/bag-charms.jpg';
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#332822]/80 via-transparent to-transparent" />
@@ -1009,12 +985,17 @@ export const AdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {productList.map((prod) => (
                 <div key={prod.id} className="p-4 bg-white rounded-3xl border border-[#D9A99A]/40 shadow-xs flex gap-4 items-center justify-between">
-                  <img
-                    src={prod.images?.[0] || prod.image}
-                    alt={prod.name}
-                    className="w-16 h-16 rounded-2xl object-cover bg-slate-100 shrink-0"
-                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80'; }}
-                  />
+                  <div className="w-16 h-16 rounded-2xl overflow-hidden bg-slate-100 shrink-0 flex items-center justify-center">
+                    {(prod.images?.[0] || prod.image) ? (
+                      <img
+                        src={prod.images?.[0] || prod.image}
+                        alt={prod.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-slate-100" />
+                    )}
+                  </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-xs text-[#332822] truncate">{prod.name}</h4>
                     <p className="text-[11px] text-[#6F5145]">Retail: ₹{prod.price} | Stock: {prod.stock}</p>
@@ -1053,7 +1034,12 @@ export const AdminDashboard = () => {
               Order Fulfillment & Timeline Status
             </h3>
             <div className="space-y-3">
-              {adminOrders.map((ord) => (
+              {adminOrders.length === 0 ? (
+                <div className="p-8 text-center text-xs text-[#6F5145] bg-[#F8E8D5]/30 rounded-2xl border border-[#D9A99A]/40">
+                  No orders placed yet. Real-time orders will appear here automatically.
+                </div>
+              ) : (
+                adminOrders.map((ord) => (
                 <div key={ord.id} className="p-4 bg-[#F8E8D5]/40 rounded-2xl border border-[#D9A99A]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
                   <div>
                     <strong className="text-sm font-mono text-[#B96F58]">{ord.id}</strong>
@@ -1085,7 +1071,8 @@ export const AdminDashboard = () => {
                     </button>
                   </div>
                 </div>
-              ))}
+              ))
+              )}
             </div>
           </div>
         )}
@@ -1098,7 +1085,12 @@ export const AdminDashboard = () => {
                 Wholesale Partner Applications ({wholesaleApplications.length})
               </h3>
               <div className="space-y-3 text-xs">
-                {wholesaleApplications.map((app) => (
+                {wholesaleApplications.length === 0 ? (
+                  <div className="p-8 text-center text-[#6F5145] bg-[#F8E8D5]/30 rounded-2xl border border-[#D9A99A]/40">
+                    No wholesale partner applications submitted yet.
+                  </div>
+                ) : (
+                  wholesaleApplications.map((app) => (
                   <div key={app.id} className="p-4 bg-[#F8E8D5]/40 rounded-2xl border border-[#D9A99A]/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
@@ -1128,7 +1120,8 @@ export const AdminDashboard = () => {
                       </button>
                     </div>
                   </div>
-                ))}
+                ))
+                )}
               </div>
             </div>
 
@@ -1138,7 +1131,12 @@ export const AdminDashboard = () => {
                 Custom Bulk Event Enquiries ({bulkEnquiries.length})
               </h3>
               <div className="space-y-3 text-xs">
-                {bulkEnquiries.map((enq) => (
+                {bulkEnquiries.length === 0 ? (
+                  <div className="p-8 text-center text-[#6F5145] bg-[#F8E8D5]/30 rounded-2xl border border-[#D9A99A]/40">
+                    No custom bulk event enquiries submitted yet.
+                  </div>
+                ) : (
+                  bulkEnquiries.map((enq) => (
                   <div key={enq.id} className="p-4 bg-white rounded-2xl border border-[#D9A99A]/30 space-y-1">
                     <div className="flex justify-between">
                       <strong className="text-[#332822]">{enq.name} ({enq.business})</strong>
@@ -1147,7 +1145,8 @@ export const AdminDashboard = () => {
                     <p className="text-[#6F5145]">{enq.phone} • {enq.email}</p>
                     {enq.notes && <p className="text-[11px] text-[#332822] italic">"{enq.notes}"</p>}
                   </div>
-                ))}
+                ))
+                )}
               </div>
             </div>
           </div>

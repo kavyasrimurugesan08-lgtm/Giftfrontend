@@ -4,8 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { Sparkles, Lock, Mail, User, ShieldCheck, Store } from 'lucide-react';
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState('user@example.com');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('CUSTOMER');
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -213,7 +213,7 @@ export const RegisterPage = () => {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+91 98420 13465"
+                placeholder="+91 98656 83004"
                 className="w-full px-3.5 py-2.5 bg-[#F8E8D5]/30 rounded-xl border border-[#D9A99A]/60 focus:outline-none focus:border-[#B96F58]"
               />
             </div>

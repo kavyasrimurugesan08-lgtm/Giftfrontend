@@ -1,55 +1,47 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useCart } from './CartContext';
 
 const WholesaleContext = createContext();
 
 export const WholesaleProvider = ({ children }) => {
   const { showToast } = useCart();
-  const [wholesaleApplications, setWholesaleApplications] = useState([
-    {
-      id: "app-101",
-      businessName: "Twinkle Trinkets & Crafts",
-      contactPerson: "Ritika Sen",
-      email: "ritika@twinkletrinkets.in",
-      phone: "+91 98200 44556",
-      city: "Kolkata, West Bengal",
-      businessType: "Retail Gift Boutique & Online Instagram Store",
-      interestedProducts: ["Phone Charms", "Keychains", "DIY Kits"],
-      monthlyBudget: "₹25,000 - ₹50,000",
-      status: "APPROVED",
-      tier: "silver",
-      submittedAt: "2026-08-20"
-    },
-    {
-      id: "app-102",
-      businessName: "Little Miracles Birthday Supplies",
-      contactPerson: "Kunal Mehra",
-      email: "kunal@littlemiracles.com",
-      phone: "+91 97111 88990",
-      city: "Jaipur, Rajasthan",
-      businessType: "Event Planner & Return Gift Specialist",
-      interestedProducts: ["Miniature Toys", "Radium Space Toys", "Fridge Magnets"],
-      monthlyBudget: "₹10,000 - ₹20,000",
-      status: "PENDING",
-      tier: "standard",
-      submittedAt: "2026-08-28"
+  const [wholesaleApplications, setWholesaleApplications] = useState(() => {
+    try {
+      const saved = localStorage.getItem('giftpocket_wholesale_apps');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter(a => !['app-101', 'app-102'].includes(a.id));
+        }
+      }
+    } catch {
+      // safe fallback
     }
-  ]);
+    return [];
+  });
 
-  const [bulkEnquiries, setBulkEnquiries] = useState([
-    {
-      id: "ENQ-501",
-      name: "Radhika Kulkarni",
-      business: "Cherry Blossom Cafe & Shop, Pune",
-      email: "radhika@cherrycafe.in",
-      phone: "+91 94220 11990",
-      productName: "Custom Name Pastel Phone Charm",
-      quantity: 150,
-      notes: "Custom name tags for cafe 3rd anniversary giveaway in Lavender theme.",
-      status: "NEW",
-      createdAt: "2026-08-29"
+  const [bulkEnquiries, setBulkEnquiries] = useState(() => {
+    try {
+      const saved = localStorage.getItem('giftpocket_bulk_enquiries');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter(e => !['ENQ-501'].includes(e.id));
+        }
+      }
+    } catch {
+      // safe fallback
     }
-  ]);
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('giftpocket_wholesale_apps', JSON.stringify(wholesaleApplications));
+  }, [wholesaleApplications]);
+
+  useEffect(() => {
+    localStorage.setItem('giftpocket_bulk_enquiries', JSON.stringify(bulkEnquiries));
+  }, [bulkEnquiries]);
 
   const submitApplication = (formData) => {
     const newApp = {

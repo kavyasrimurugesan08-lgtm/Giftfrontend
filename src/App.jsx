@@ -5,6 +5,7 @@ import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { WholesaleProvider } from './context/WholesaleContext';
 import { CollectionsProvider } from './context/CollectionsContext';
+import { ProductsProvider } from './context/ProductsContext';
 import { HomepageMediaProvider } from './context/HomepageMediaContext';
 import { CustomizerProvider } from './context/CustomizerContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -89,19 +90,21 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <CollectionsProvider>
-          <HomepageMediaProvider>
-            <CustomizerProvider>
-              <CartProvider>
-                <WishlistProvider>
-                  <WholesaleProvider>
-                    <Router>
-                      <AppLayout />
-                    </Router>
-                  </WholesaleProvider>
-                </WishlistProvider>
-              </CartProvider>
-            </CustomizerProvider>
-          </HomepageMediaProvider>
+          <ProductsProvider>
+            <HomepageMediaProvider>
+              <CustomizerProvider>
+                <CartProvider>
+                  <WishlistProvider>
+                    <WholesaleProvider>
+                      <Router>
+                        <AppLayout />
+                      </Router>
+                    </WholesaleProvider>
+                  </WishlistProvider>
+                </CartProvider>
+              </CustomizerProvider>
+            </HomepageMediaProvider>
+          </ProductsProvider>
         </CollectionsProvider>
       </AuthProvider>
     </ThemeProvider>

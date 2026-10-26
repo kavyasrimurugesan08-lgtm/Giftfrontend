@@ -15,39 +15,39 @@ export const FinalBrandFrame = () => {
         <BlobShape variant={2} color="#717C6D" />
       </div>
 
-      {/* Floating Product 1 (Top Left) */}
-      <div className="absolute top-12 left-6 md:left-24 z-10 w-28 md:w-36 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform -rotate-12 animate-float hidden sm:block">
+      {/* Product 1 (Top Left) */}
+      <div className="absolute top-12 left-6 md:left-24 z-10 w-28 md:w-36 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform -rotate-12 hidden sm:block">
         <img
-          src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80"
-          alt="Custom Charm"
-          className="w-full h-full object-cover"
+          src="/uploads/products/phone-charm-pastel-tulip.jpg"
+          alt="Custom Phone Charm"
+          className="w-full h-full object-cover block"
         />
       </div>
 
-      {/* Floating Product 2 (Top Right) */}
-      <div className="absolute top-16 right-6 md:right-28 z-10 w-24 md:w-32 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform rotate-12 animate-float-reverse hidden sm:block">
+      {/* Product 2 (Top Right) */}
+      <div className="absolute top-16 right-6 md:right-28 z-10 w-24 md:w-32 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform rotate-12 hidden sm:block">
         <img
-          src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80"
-          alt="Bracelet"
-          className="w-full h-full object-cover"
+          src="/uploads/products/flower-bell-charms.jpg"
+          alt="Floral Bell Charms"
+          className="w-full h-full object-cover block"
         />
       </div>
 
-      {/* Floating Product 3 (Bottom Left) */}
-      <div className="absolute bottom-12 left-12 md:left-32 z-10 w-24 md:w-32 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform rotate-6 animate-float hidden sm:block">
+      {/* Product 3 (Bottom Left) */}
+      <div className="absolute bottom-12 left-12 md:left-32 z-10 w-24 md:w-32 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform rotate-6 hidden sm:block">
         <img
-          src="https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=400&q=80"
-          alt="Mini Keychain"
-          className="w-full h-full object-cover"
+          src="/uploads/products/miniature-panda-bamboo-set.jpg"
+          alt="Miniature Panda Figurine"
+          className="w-full h-full object-cover block"
         />
       </div>
 
-      {/* Floating Product 4 (Bottom Right) */}
-      <div className="absolute bottom-16 right-10 md:right-32 z-10 w-28 md:w-36 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform -rotate-6 animate-float-reverse hidden sm:block">
+      {/* Product 4 (Bottom Right) */}
+      <div className="absolute bottom-16 right-10 md:right-32 z-10 w-28 md:w-36 aspect-square rounded-2xl overflow-hidden shadow-xl border-2 border-white transform -rotate-6 hidden sm:block">
         <img
-          src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=400&q=80"
-          alt="Gift Box"
-          className="w-full h-full object-cover"
+          src="/uploads/products/pastel-flower-claw-clip-set.jpg"
+          alt="Pastel Flower Claw Clip"
+          className="w-full h-full object-cover block"
         />
       </div>
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ShoppingBag, Eye, Heart, ArrowRight } from 'lucide-react';
-import { PRODUCTS } from '../../data/products';
+import { useProducts } from '../../context/ProductsContext';
 import { useCart } from '../../context/CartContext';
 import { QuickViewModal } from '../product/QuickViewModal';
 import { DoodleSparkle } from '../common/BlobShape';
@@ -9,10 +9,16 @@ import { DoodleSparkle } from '../common/BlobShape';
 export const FeaturedShowcase = () => {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const { addToCart } = useCart();
+  const { products } = useProducts();
 
-  const heroProduct = PRODUCTS[0]; // Custom Name Phone Charm
-  const secondary1 = PRODUCTS[3]; // Couple Magnetic Bracelet
-  const secondary2 = PRODUCTS[4]; // Custom Keychain
+  const heroProduct = products.find(p => p.image) || products[0] || {};
+  const remaining = products.filter(p => p.id !== heroProduct.id);
+  const secondary1 = remaining.find(p => p.image) || remaining[0] || {};
+  const secondary2 = remaining.filter(p => p.id !== secondary1.id).find(p => p.image) || remaining[1] || {};
+
+  const heroImg = heroProduct.image || (Array.isArray(heroProduct.images) && heroProduct.images[0]) || '';
+  const sec1Img = secondary1.image || (Array.isArray(secondary1.images) && secondary1.images[0]) || '';
+  const sec2Img = secondary2.image || (Array.isArray(secondary2.images) && secondary2.images[0]) || '';
 
   return (
     <section className="py-24 bg-[#EDE8E1] relative overflow-hidden">
@@ -52,16 +58,20 @@ export const FeaturedShowcase = () => {
               </span>
             </div>
 
-            {/* Center Product Image */}
+            {/* Center Product Image — Static Frame */}
             <div className="my-8 relative flex items-center justify-center">
-              <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform group-hover:scale-105 transition-transform duration-700">
-                <img
-                  src={heroProduct.images[0]}
-                  alt={heroProduct.name}
-                  className="w-full h-full object-cover"
-                />
+              <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center bg-white/40">
+                {heroImg ? (
+                  <img
+                    src={heroImg}
+                    alt={heroProduct.name || 'Featured Item'}
+                    className="w-full h-full object-cover block"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-[#EDE8E1]/40" />
+                )}
               </div>
-              <DoodleSparkle className="absolute -top-4 right-12 w-8 h-8 text-[#D69E4A] animate-pulse-slow" />
+              <DoodleSparkle className="absolute -top-4 right-12 w-8 h-8 text-[#D69E4A]" />
             </div>
 
             {/* Bottom Info & CTAs */}
@@ -102,13 +112,17 @@ export const FeaturedShowcase = () => {
           <div className="lg:col-span-5 flex flex-col gap-6">
             
             {/* Secondary 1 - Sage Tone */}
-            <div className="flex-1 bg-[#717C6D]/20 rounded-3xl p-6 border border-[#717C6D]/40 flex flex-col sm:flex-row items-center gap-6 group hover:shadow-lg transition-all duration-300">
-              <div className="w-36 h-36 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0">
-                <img
-                  src={secondary1.images[0]}
-                  alt={secondary1.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
+            <div className="flex-1 bg-[#717C6D]/20 rounded-3xl p-6 border border-[#717C6D]/40 flex flex-col sm:flex-row items-center gap-6 shadow-sm">
+              <div className="w-36 h-36 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0 flex items-center justify-center bg-white/40">
+                {sec1Img ? (
+                  <img
+                    src={sec1Img}
+                    alt={secondary1.name || 'Keepsake'}
+                    className="w-full h-full object-cover block"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#EDE8E1]/40" />
+                )}
               </div>
               <div className="flex-1 space-y-2 text-center sm:text-left">
                 <span className="text-[10px] font-black tracking-widest text-[#717C6D] uppercase block">
@@ -131,13 +145,17 @@ export const FeaturedShowcase = () => {
             </div>
 
             {/* Secondary 2 - Lilac / Ochre Tone */}
-            <div className="flex-1 bg-[#9E8EB8]/20 rounded-3xl p-6 border border-[#9E8EB8]/40 flex flex-col sm:flex-row items-center gap-6 group hover:shadow-lg transition-all duration-300">
-              <div className="w-36 h-36 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0">
-                <img
-                  src={secondary2.images[0]}
-                  alt={secondary2.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
+            <div className="flex-1 bg-[#9E8EB8]/20 rounded-3xl p-6 border border-[#9E8EB8]/40 flex flex-col sm:flex-row items-center gap-6 shadow-sm">
+              <div className="w-36 h-36 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0 flex items-center justify-center bg-white/40">
+                {sec2Img ? (
+                  <img
+                    src={sec2Img}
+                    alt={secondary2.name || 'Keepsake'}
+                    className="w-full h-full object-cover block"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#EDE8E1]/40" />
+                )}
               </div>
               <div className="flex-1 space-y-2 text-center sm:text-left">
                 <span className="text-[10px] font-black tracking-widest text-[#9E8EB8] uppercase block">

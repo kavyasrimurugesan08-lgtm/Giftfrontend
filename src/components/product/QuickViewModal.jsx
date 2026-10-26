@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Star, ShoppingBag, Heart, Sparkles, Check, ArrowRight } from 'lucide-react';
+import { X, Star, ShoppingBag, Heart, Sparkles, Check, ArrowRight, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -13,6 +13,11 @@ export const QuickViewModal = ({ product, onClose }) => {
   if (!product) return null;
 
   const isLiked = isInWishlist(product.id);
+  const primaryImage = product.image || (Array.isArray(product.images) && product.images[0]) || '';
+  const images = (Array.isArray(product.images) && product.images.length > 0)
+    ? product.images.filter(Boolean)
+    : (primaryImage ? [primaryImage] : []);
+  const activeImage = images[selectedImage] || primaryImage;
 
   const handleAdd = () => {
     addToCart(product, quantity);
@@ -33,16 +38,23 @@ export const QuickViewModal = ({ product, onClose }) => {
 
         {/* Gallery on Left */}
         <div className="md:w-1/2 p-6 flex flex-col justify-between bg-[#F4D2BE]/30">
-          <div className="aspect-square rounded-2xl overflow-hidden bg-white/60 mb-3 border border-[#D9A99A]/40">
-            <img
-              src={product.images[selectedImage]}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+          <div className="aspect-square rounded-2xl overflow-hidden bg-white/60 mb-3 border border-[#D9A99A]/40 flex items-center justify-center">
+            {activeImage ? (
+              <img
+                src={activeImage}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-[#F4DCD1]/40 text-[#6F5145]/70 p-4 text-center">
+                <Package className="w-12 h-12 stroke-[1.2] mb-2 text-[#B96F58]/60" />
+                <span className="text-xs font-semibold">Awaiting Product Photo</span>
+              </div>
+            )}
           </div>
-          {product.images.length > 1 && (
+          {images.length > 1 && (
             <div className="flex gap-2">
-              {product.images.map((img, idx) => (
+              {images.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}

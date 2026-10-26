@@ -1,41 +1,84 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Link as LinkIcon, Image as ImageIcon, Sparkles, X, Check } from 'lucide-react';
+import { Upload, Link as LinkIcon, Image as ImageIcon, X, Check, AlertCircle } from 'lucide-react';
 
-const BRAND_PRESET_PHOTOS = [
-  { label: 'Floral Phone Charm', url: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Letter Charm Wristlet', url: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Couple Bracelets', url: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Pastel Flower Clips', url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Mini Bamboo Panda', url: 'https://images.unsplash.com/photo-1558877385-81a1c7e67d72?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Luxury Gift Hamper', url: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80' },
-  { label: 'Radium Glow Toys', url: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=600&q=80' },
-  { label: 'DIY Bead Craft Kit', url: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80' }
-];
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
 
 export const ImageUploadPicker = ({
   value,
   onChange,
-  label = "Product / Feature Image",
-  aspectHint = "Recommended: Square 1:1 or Portrait 4:5"
+  label = "Product Primary Image",
+  aspectHint = "Standard formats: JPG, JPEG, PNG, WebP (Max 10MB)"
 }) => {
-  const [activeTab, setActiveTab] = useState('upload'); // 'upload' | 'url' | 'presets'
+  const [activeTab, setActiveTab] = useState('upload'); // 'upload' | 'url'
   const [dragActive, setDragActive] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const handleFile = (file) => {
+  const validateFile = (file) => {
+    if (!file) return 'No file selected.';
+
+    const fileExt = '.' + (file.name.split('.').pop() || '').toLowerCase();
+    const mimeType = (file.type || '').toLowerCase();
+
+    const isTypeValid = ALLOWED_MIME_TYPES.includes(mimeType) || ALLOWED_EXTENSIONS.includes(fileExt);
+    if (!isTypeValid) {
+      return 'Invalid format. Only JPG, JPEG, PNG, and WebP images are supported.';
+    }
+
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return `File size (${(file.size / (1024 * 1024)).toFixed(1)}MB) exceeds the 10MB maximum limit.`;
+    }
+
+    return null;
+  };
+
+  const handleFile = async (file) => {
     if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      alert('Please select a valid image file (JPG, PNG, WEBP, GIF).');
+    setErrorMessage('');
+
+    const error = validateFile(file);
+    if (error) {
+      setErrorMessage(error);
       return;
     }
+
+    // 1. Immediately create local preview using FileReader
     const reader = new FileReader();
     reader.onload = (e) => {
-      const result = e.target?.result;
-      if (result) {
-        onChange(result);
+      const localDataUrl = e.target?.result;
+      if (localDataUrl && typeof localDataUrl === 'string') {
+        onChange(localDataUrl);
       }
     };
     reader.readAsDataURL(file);
+
+    // 2. Upload to persistent backend storage
+    try {
+      setIsUploading(true);
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const backendUrl = 'http://localhost:5000/api/upload/product';
+      const response = await fetch(backendUrl, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.url) {
+          onChange(data.url);
+        }
+      }
+    } catch (uploadErr) {
+      // Local preview is already saved, so continue gracefully
+      console.warn('Backend upload note (using persistent preview):', uploadErr.message);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleDrag = (e) => {
@@ -72,11 +115,19 @@ export const ImageUploadPicker = ({
         )}
       </div>
 
-      {/* Tabs Selector: Upload vs URL vs Presets */}
+      {/* Error Banner */}
+      {errorMessage && (
+        <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0" />
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
+      {/* Tabs Selector: Upload vs URL */}
       <div className="flex bg-[#F8E8D5]/40 p-1 rounded-xl border border-[#D9A99A]/40 text-xs">
         <button
           type="button"
-          onClick={() => setActiveTab('upload')}
+          onClick={() => { setActiveTab('upload'); setErrorMessage(''); }}
           className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 ${
             activeTab === 'upload'
               ? 'bg-[#B96F58] text-white shadow-xs'
@@ -84,12 +135,12 @@ export const ImageUploadPicker = ({
           }`}
         >
           <Upload className="w-3.5 h-3.5" />
-          <span>Device Upload</span>
+          <span>Upload Image File</span>
         </button>
 
         <button
           type="button"
-          onClick={() => setActiveTab('url')}
+          onClick={() => { setActiveTab('url'); setErrorMessage(''); }}
           className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 ${
             activeTab === 'url'
               ? 'bg-[#B96F58] text-white shadow-xs'
@@ -97,20 +148,7 @@ export const ImageUploadPicker = ({
           }`}
         >
           <LinkIcon className="w-3.5 h-3.5" />
-          <span>Web URL</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('presets')}
-          className={`flex-1 py-1.5 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 ${
-            activeTab === 'presets'
-              ? 'bg-[#B96F58] text-white shadow-xs'
-              : 'text-[#6F5145] hover:text-[#332822]'
-          }`}
-        >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Presets</span>
+          <span>Direct Image Link</span>
         </button>
       </div>
 
@@ -122,7 +160,7 @@ export const ImageUploadPicker = ({
           onDragOver={handleDrag}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className={`border-2 border-dashed rounded-2xl p-4 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
+          className={`border-2 border-dashed rounded-2xl p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
             dragActive
               ? 'border-[#B96F58] bg-[#F4D2BE]/40 scale-[1.01]'
               : 'border-[#D9A99A]/60 bg-[#F8E8D5]/20 hover:border-[#B96F58] hover:bg-[#F4D2BE]/20'
@@ -131,7 +169,7 @@ export const ImageUploadPicker = ({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
             className="hidden"
             onChange={(e) => handleFile(e.target.files?.[0])}
           />
@@ -140,10 +178,10 @@ export const ImageUploadPicker = ({
           </div>
           <div>
             <p className="text-xs font-bold text-[#332822]">
-              Click to choose photo or drag & drop here
+              {isUploading ? 'Uploading to server...' : 'Click to select photo or drag & drop here'}
             </p>
             <p className="text-[10px] text-[#6F5145] mt-0.5">
-              Supports PNG, JPG, WEBP, GIF (up to 10MB)
+              Supported: JPG, JPEG, PNG, WebP (up to 10MB)
             </p>
           </div>
         </div>
@@ -156,59 +194,34 @@ export const ImageUploadPicker = ({
             type="url"
             value={value || ''}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="https://images.unsplash.com/photo-..."
+            placeholder="http://localhost:5000/uploads/products/image.jpg"
             className="w-full px-3.5 py-2 bg-[#F8E8D5]/20 border border-[#D9A99A]/60 rounded-xl text-xs font-mono text-[#332822] focus:outline-none focus:border-[#B96F58]"
           />
           <p className="text-[10px] text-[#6F5145]">
-            Paste any public image link or CDN URL.
+            Paste the reference link or storage URL of the administrator image.
           </p>
-        </div>
-      )}
-
-      {/* Tab 3: Brand Photo Presets */}
-      {activeTab === 'presets' && (
-        <div className="grid grid-cols-4 gap-2 max-h-36 overflow-y-auto p-1">
-          {BRAND_PRESET_PHOTOS.map((preset, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => onChange(preset.url)}
-              className={`relative rounded-xl overflow-hidden aspect-square border-2 transition-all group ${
-                value === preset.url ? 'border-[#B96F58] ring-2 ring-[#B96F58]/40 scale-105' : 'border-[#D9A99A]/40 hover:border-[#B96F58]'
-              }`}
-              title={preset.label}
-            >
-              <img src={preset.url} alt={preset.label} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-1 text-[8px] text-white font-bold text-center leading-tight">
-                {preset.label}
-              </div>
-              {value === preset.url && (
-                <div className="absolute top-1 right-1 bg-[#B96F58] text-white rounded-full p-0.5 shadow-xs">
-                  <Check className="w-2.5 h-2.5" />
-                </div>
-              )}
-            </button>
-          ))}
         </div>
       )}
 
       {/* Live Preview Bar */}
       {value && (
-        <div className="p-2.5 bg-[#FAF5EE] rounded-xl border border-[#D9A99A]/40 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <img
-              src={value}
-              alt="Selected Preview"
-              className="w-12 h-12 rounded-lg object-cover border border-[#D9A99A]/50 shrink-0 bg-white"
-              onError={(e) => {
-                e.target.src = 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80';
-              }}
-            />
+        <div className="p-3 bg-[#FAF5EE] rounded-2xl border border-[#D9A99A]/50 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-14 h-14 rounded-xl overflow-hidden border border-[#D9A99A]/60 shrink-0 bg-white shadow-xs">
+              <img
+                src={value}
+                alt="Uploaded Primary Preview"
+                className="w-full h-full object-cover block"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
             <div className="min-w-0">
-              <span className="text-[11px] font-bold text-[#332822] block truncate">
-                Photo Selected
+              <span className="text-xs font-bold text-[#332822] block truncate">
+                Primary Product Photo Saved
               </span>
-              <span className="text-[9px] font-mono text-[#6F5145] block truncate max-w-[220px]">
+              <span className="text-[10px] font-mono text-[#6F5145] block truncate max-w-[240px]">
                 {value.startsWith('data:') ? 'Local file uploaded' : value}
               </span>
             </div>
@@ -217,8 +230,8 @@ export const ImageUploadPicker = ({
           <button
             type="button"
             onClick={() => onChange('')}
-            className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg text-[10px] font-bold transition-colors"
-            title="Clear Photo"
+            className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-xl text-xs font-bold transition-colors"
+            title="Remove Photo"
           >
             <X className="w-4 h-4" />
           </button>

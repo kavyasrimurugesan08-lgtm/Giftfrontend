@@ -3,14 +3,47 @@ import { CATEGORIES as INITIAL_CATEGORIES } from '../data/products';
 
 const CollectionsContext = createContext();
 
-const STORAGE_KEY = 'giftpocket_collections_v1';
+const STORAGE_KEY = 'giftpocket_collections_v3';
+
+const sanitizeCategories = (list) => {
+  if (!Array.isArray(list)) return INITIAL_CATEGORIES;
+  return list.map(c => {
+    let img = typeof c.image === 'string' ? c.image.trim() : '';
+    const isStockOrPlaceholder =
+      img.includes('unsplash.com') ||
+      img.includes('placeholder') ||
+      img.includes('dummyimage') ||
+      img.includes('istockphoto') ||
+      img.includes('shutterstock') ||
+      img.includes('pexels.com');
+
+    if (isStockOrPlaceholder) {
+      img = '';
+    }
+    // If empty, inherit approved default user image if available
+    if (!img) {
+      const defaultMatch = INITIAL_CATEGORIES.find(ic => ic.id === c.id);
+      if (defaultMatch?.image) {
+        img = defaultMatch.image;
+      }
+    }
+
+    return {
+      ...c,
+      image: img
+    };
+  });
+};
 
 export const CollectionsProvider = ({ children }) => {
   const [categories, setCategories] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('giftpocket_admin_categories');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return sanitizeCategories(parsed);
+        }
       }
     } catch (e) {
       console.error('Error loading collections from storage', e);
@@ -37,13 +70,13 @@ export const CollectionsProvider = ({ children }) => {
     const handleStorage = (e) => {
       if ((e.key === STORAGE_KEY || e.key === 'giftpocket_admin_categories') && e.newValue) {
         try {
-          setCategories(JSON.parse(e.newValue));
+          setCategories(sanitizeCategories(JSON.parse(e.newValue)));
         } catch {}
       }
     };
     const handleBridgeSync = (e) => {
       if ((e.detail?.key === STORAGE_KEY || e.detail?.key === 'giftpocket_admin_categories') && e.detail?.value) {
-        setCategories(e.detail.value);
+        setCategories(sanitizeCategories(e.detail.value));
       }
     };
 
@@ -86,7 +119,7 @@ export const CollectionsProvider = ({ children }) => {
       icon: newCat.icon || 'Sparkles',
       color: newCat.color || '#F4D2BE',
       textColor: newCat.textColor || '#332822',
-      image: newCat.image || '/images/products/bag-charms.jpg',
+      image: newCat.image || '',
       itemCount: parseInt(newCat.itemCount || 10, 10),
       ...newCat
     };

@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { PRODUCTS, MOODS } from '../data/products';
+import { MOODS } from '../data/products';
 import { useCollections } from '../context/CollectionsContext';
+import { useProducts } from '../context/ProductsContext';
 import { ProductCard } from '../components/product/ProductCard';
 import { QuickViewModal } from '../components/product/QuickViewModal';
 import { 
@@ -28,6 +29,7 @@ import {
 export const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { categories } = useCollections();
+  const { products } = useProducts();
   
   // URL Query Initial State
   const initialCategory = searchParams.get('category') || 'all';
@@ -90,16 +92,16 @@ export const Shop = () => {
 
   // Calculate live count of items per category
   const categoryCounts = useMemo(() => {
-    const counts = { all: PRODUCTS.length };
+    const counts = { all: products.length };
     categories.forEach(cat => {
-      counts[cat.slug] = PRODUCTS.filter(p => p.category === cat.slug).length;
+      counts[cat.slug] = products.filter(p => p.category === cat.slug).length;
     });
     return counts;
-  }, [categories]);
+  }, [categories, products]);
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return products.filter((product) => {
       // Category filter
       if (selectedCategory !== 'all' && product.category !== selectedCategory) {
         return false;

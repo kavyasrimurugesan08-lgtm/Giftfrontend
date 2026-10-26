@@ -38,15 +38,16 @@ export const PinterestGallery = () => {
                 key={item.id}
                 className="break-inside-avoid relative rounded-3xl overflow-hidden shadow-md group border border-[#D9A99A]/40 bg-white"
               >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80';
-                  }}
-                />
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full object-cover block"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-[#F4D2BE]/20" />
+                )}
 
                 {/* Top Floating Heart Button */}
                 <button

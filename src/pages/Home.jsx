@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { HeroCinematic } from '../components/story/HeroCinematic';
 import { BrandIntro } from '../components/story/BrandIntro';
-import { ShopByMood } from '../components/story/ShopByMood';
 import { FeaturedShowcase } from '../components/story/FeaturedShowcase';
 import { ColorStoryChapter } from '../components/story/ColorStoryChapter';
 import { CategoryCollage } from '../components/story/CategoryCollage';
@@ -13,14 +12,13 @@ import { CustomerLoveTestimonials } from '../components/story/CustomerLoveTestim
 import { FinalBrandFrame } from '../components/story/FinalBrandFrame';
 import { ProductCard } from '../components/product/ProductCard';
 import { QuickViewModal } from '../components/product/QuickViewModal';
-import { PRODUCTS } from '../data/products';
+import { useProducts } from '../context/ProductsContext';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, Star } from 'lucide-react';
 
 export const Home = () => {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
-
-  const bestSellers = PRODUCTS.slice(0, 8);
+  const { bestSellers } = useProducts();
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8E8D5]">
@@ -30,9 +28,6 @@ export const Home = () => {
 
       {/* 02 — BRAND INTRO */}
       <BrandIntro />
-
-      {/* 03 — SHOP BY MOOD */}
-      <ShopByMood />
 
       {/* 04 — FEATURED EDITORIAL PRODUCTS */}
       <FeaturedShowcase />

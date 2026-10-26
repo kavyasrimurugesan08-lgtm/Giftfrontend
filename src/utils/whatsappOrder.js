@@ -1,4 +1,4 @@
-export const WHATSAPP_PHONE_NUMBER = "919842013465"; // GIFTPocket WhatsApp Support & Order Desk
+export const WHATSAPP_PHONE_NUMBER = "919865683004"; // GIFTPocket WhatsApp Support & Order Desk
 
 /**
  * Format structured WhatsApp Order message
@@ -26,6 +26,9 @@ export const formatWhatsAppOrderMessage = ({
   if (customer.email) message += `• *Email:* ${customer.email}\n`;
   message += `\n📍 *DELIVERY ADDRESS:*\n`;
   message += `${customer.street}, ${customer.city}, ${customer.state} - ${customer.pincode}\n`;
+  if (customer.mapLocationUrl) {
+    message += `🗺️ *Live Location Map:* ${customer.mapLocationUrl}\n`;
+  }
   if (customer.notes) {
     message += `📝 *Notes / Gift Message:* ${customer.notes}\n`;
   }
