@@ -36,19 +36,19 @@ export const MobileMenu = ({ isOpen, onClose, navLinks }) => {
 
       <div className="fixed inset-y-0 left-0 max-w-full flex">
         {/* Transparent Textured Slide Drawer */}
-        <div className="w-screen max-w-md sm:max-w-lg transparent-texture-drawer text-[#332822] flex flex-col justify-between overflow-y-auto grain-bg border-r border-white/40 shadow-[0_25px_60px_-15px_rgba(51,40,34,0.3)] animate-in slide-in-from-left duration-300">
+        <div className="w-[85vw] max-w-sm sm:max-w-md bg-[#EDE8E1] text-[#18110D] flex flex-col justify-between overflow-y-auto grain-bg border-r border-[#D4C9BA] shadow-[0_25px_60px_-15px_rgba(24,17,13,0.35)] animate-in slide-in-from-left duration-300">
           
           {/* Header Bar inside Drawer */}
-          <div className="p-6 border-b border-white/40 flex items-center justify-between bg-white/30 backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#B96F58] to-[#9E5742] flex items-center justify-center text-white shadow-md shadow-[#B96F58]/20">
-                <Sparkles className="w-5 h-5 fill-current" />
+          <div className="p-4 sm:p-6 border-b border-[#D4C9BA]/60 flex items-center justify-between bg-white/40 backdrop-blur-md">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#AC5B44] to-[#8F3E28] flex items-center justify-center text-white shadow-md shadow-[#AC5B44]/25">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
               </div>
               <div>
-                <span className="font-editorial text-xl font-bold tracking-tight text-[#332822] block leading-none">
+                <span className="font-editorial text-lg sm:text-xl font-bold tracking-tight text-[#18110D] block leading-none">
                   GIFTPocket
                 </span>
-                <span className="text-[10px] font-hand text-[#6F5145] tracking-wider leading-tight mt-0.5 block">
+                <span className="text-[9.5px] sm:text-[10px] font-hand text-[#544E48] tracking-wider leading-tight mt-0.5 block">
                   Studio Directory & Navigation
                 </span>
               </div>
@@ -56,20 +56,20 @@ export const MobileMenu = ({ isOpen, onClose, navLinks }) => {
 
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full bg-white/70 hover:bg-[#332822] text-[#332822] hover:text-white flex items-center justify-center shadow-xs transition-all hover:rotate-90"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/80 hover:bg-[#18110D] text-[#18110D] hover:text-white flex items-center justify-center shadow-xs transition-all hover:rotate-90 cursor-pointer"
               aria-label="Close menu"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
 
           {/* User Status Ribbon */}
-          <div className="px-6 py-3.5 bg-white/40 border-b border-white/30 flex items-center justify-between text-xs">
+          <div className="px-4 sm:px-6 py-3 bg-white/50 border-b border-[#D4C9BA]/50 flex items-center justify-between text-xs">
             <div>
-              <p className="font-bold text-[#332822]">
+              <p className="font-bold text-[#18110D]">
                 {isAuthenticated ? `Hello, ${user?.name}` : "Welcome to GIFTPocket"}
               </p>
-              <p className="text-[11px] text-[#6F5145] font-medium">
+              <p className="text-[10px] sm:text-[11px] text-[#544E48] font-medium">
                 {isAuthenticated ? (user?.email || 'Logged In Account') : 'Handcrafted Boutique Experience'}
               </p>
             </div>

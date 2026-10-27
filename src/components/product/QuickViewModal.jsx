@@ -25,19 +25,19 @@ export const QuickViewModal = ({ product, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#332822]/60 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-[#F8E8D5] rounded-3xl shadow-2xl border border-[#D9A99A]/50 overflow-hidden flex flex-col md:flex-row">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#332822]/60 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#F8E8D5] rounded-3xl shadow-2xl border border-[#D9A99A]/50 flex flex-col md:flex-row scrollbar-thin">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 hover:bg-[#B96F58] hover:text-[#F8E8D5] text-[#6F5145] transition-colors"
+          className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 hover:bg-[#B96F58] hover:text-[#F8E8D5] text-[#6F5145] transition-colors cursor-pointer shadow-xs"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Gallery on Left */}
-        <div className="md:w-1/2 p-6 flex flex-col justify-between bg-[#F4D2BE]/30">
+        <div className="md:w-1/2 p-4 sm:p-6 flex flex-col justify-between bg-[#F4D2BE]/30">
           <div className="aspect-square rounded-2xl overflow-hidden bg-white/60 mb-3 border border-[#D9A99A]/40 flex items-center justify-center">
             {activeImage ? (
               <img
@@ -72,7 +72,7 @@ export const QuickViewModal = ({ product, onClose }) => {
         </div>
 
         {/* Details on Right */}
-        <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+        <div className="md:w-1/2 p-4 sm:p-6 flex flex-col justify-between space-y-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               {product.badge && (

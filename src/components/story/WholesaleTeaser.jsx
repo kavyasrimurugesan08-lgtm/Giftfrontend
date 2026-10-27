@@ -35,34 +35,34 @@ export const WholesaleTeaser = () => {
             </p>
 
             {/* Benefit Highlights */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
-              <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1 backdrop-blur-xs">
-                <p className="font-black text-[#D69E4A] text-sm uppercase tracking-wider">Low MOQ</p>
-                <p className="text-xs text-[#DFD7CB]">Starts at only 20 pcs</p>
+            <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 pt-2">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1 backdrop-blur-xs">
+                <p className="font-black text-[#D69E4A] text-xs sm:text-sm uppercase tracking-wider">Low MOQ</p>
+                <p className="text-[11px] sm:text-xs text-[#DFD7CB]">Starts at only 20 pcs</p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1 backdrop-blur-xs">
-                <p className="font-black text-[#D69E4A] text-sm uppercase tracking-wider">Up to 60% Margin</p>
-                <p className="text-xs text-[#DFD7CB]">High-profit impulse items</p>
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1 backdrop-blur-xs">
+                <p className="font-black text-[#D69E4A] text-xs sm:text-sm uppercase tracking-wider">Up to 60% Margin</p>
+                <p className="text-[11px] sm:text-xs text-[#DFD7CB]">High-profit impulse items</p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1 backdrop-blur-xs">
-                <p className="font-black text-[#D69E4A] text-sm uppercase tracking-wider">Pan-India Courier</p>
-                <p className="text-xs text-[#DFD7CB]">Insured express dispatch</p>
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-white/10 border border-white/15 space-y-1 backdrop-blur-xs">
+                <p className="font-black text-[#D69E4A] text-xs sm:text-sm uppercase tracking-wider">Pan-India Courier</p>
+                <p className="text-[11px] sm:text-xs text-[#DFD7CB]">Insured express dispatch</p>
               </div>
             </div>
 
-            <div className="pt-4 flex flex-wrap items-center gap-4">
+            <div className="pt-3 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <Link
                 to="/wholesale"
-                className="px-8 py-4 bg-[#C97D67] hover:bg-[#D69E4A] hover:text-[#1A1816] text-white rounded-full font-display font-bold text-xs tracking-widest uppercase transition-all shadow-xl flex items-center gap-2 group cursor-pointer"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#C97D67] hover:bg-[#D69E4A] hover:text-[#1A1816] text-white rounded-full font-display font-bold text-xs tracking-widest uppercase transition-all shadow-xl flex items-center justify-center gap-2 group cursor-pointer text-center"
               >
                 <span>EXPLORE WHOLESALE CATALOGUE</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/wholesale#apply"
-                className="px-6 py-4 bg-white/10 hover:bg-white/20 text-white rounded-full font-display font-bold text-xs tracking-widest uppercase border border-white/30 transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-5 sm:px-6 py-3.5 sm:py-4 bg-white/10 hover:bg-white/20 text-white rounded-full font-display font-bold text-xs tracking-widest uppercase border border-white/30 transition-colors cursor-pointer text-center"
               >
                 Apply as a Reseller
               </Link>
@@ -70,7 +70,7 @@ export const WholesaleTeaser = () => {
           </div>
 
           {/* Right Card: Wholesale Tier Summary Preview (5 Cols) */}
-          <div className="lg:col-span-5 bg-[#EDE8E1] text-[#1A1816] rounded-3xl p-8 shadow-2xl border-4 border-[#C97D67]/40 space-y-6">
+          <div className="lg:col-span-5 bg-[#EDE8E1] text-[#1A1816] rounded-3xl p-5 sm:p-8 shadow-2xl border-4 border-[#C97D67]/40 space-y-5 sm:space-y-6">
             <div className="flex items-center justify-between border-b-2 border-[#1A1816]/25 pb-4">
               <div>
                 <span className="text-[10px] font-black tracking-widest text-[#C97D67] uppercase block mb-0.5">

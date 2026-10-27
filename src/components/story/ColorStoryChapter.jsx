@@ -77,28 +77,28 @@ export const ColorStoryChapter = () => {
 
   return (
     <section
-      className="py-24 transition-colors duration-700 ease-in-out relative overflow-hidden"
+      className="py-14 sm:py-24 transition-colors duration-700 ease-in-out relative overflow-hidden"
       style={{ backgroundColor: current.bgColor }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Navigation Selector for Color Chapters */}
-        <div className="flex flex-col items-center mb-16 space-y-4">
-          <span className={`text-xs font-black tracking-[0.25em] uppercase ${isDarkCard ? 'text-white/90' : 'text-[#1A1816]'}`}>
+        <div className="flex flex-col items-center mb-10 sm:mb-16 space-y-3 sm:space-y-4">
+          <span className={`text-[10px] sm:text-xs font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase ${isDarkCard ? 'text-white/90' : 'text-[#1A1816]'}`}>
             The Lookbook Color Palette
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-3 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-white/90">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-3 p-1.5 sm:p-2 bg-white/85 backdrop-blur-md rounded-2xl sm:rounded-full shadow-lg border border-white/90 max-w-full">
             {chapters.map((ch, idx) => (
               <button
                 key={ch.id}
                 onClick={() => setActiveChapter(idx)}
-                className={`px-5 py-2.5 rounded-full text-xs font-display font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                className={`px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-xl sm:rounded-full text-[11px] sm:text-xs font-display font-bold transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer ${
                   activeChapter === idx
                     ? 'bg-[#1A1816] text-white shadow-md scale-105'
                     : 'hover:bg-white text-[#1A1816]'
                 }`}
               >
-                <span className="w-3 h-3 rounded-full border border-black/20" style={{ backgroundColor: ch.bgColor }} />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-black/20 shrink-0" style={{ backgroundColor: ch.bgColor }} />
                 <span>{ch.name}</span>
               </button>
             ))}
@@ -106,30 +106,30 @@ export const ColorStoryChapter = () => {
         </div>
 
         {/* Dynamic Chapter Visual Presentation (Lookbook Split Style) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
           
           {/* Chapter Text Info (6 Cols) */}
-          <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
+          <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-center lg:text-left">
             <span
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-white text-[#1A1816] shadow-sm border border-white"
+              className="inline-block px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-widest bg-white text-[#1A1816] shadow-sm border border-white"
             >
               Chapter 0{activeChapter + 1} • {current.categoryName}
             </span>
 
-            <h2 className={`font-editorial text-4xl sm:text-6xl lg:text-7xl font-black leading-tight tracking-tight uppercase ${isDarkCard ? '!text-white text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]' : '!text-[#121110] text-[#121110]'}`}>
+            <h2 className={`font-editorial text-2xl xs:text-3xl sm:text-6xl lg:text-7xl font-black leading-tight tracking-tight uppercase ${isDarkCard ? '!text-white text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]' : '!text-[#121110] text-[#121110]'}`}>
               {current.headline}
             </h2>
 
             <div className={`w-12 h-[2px] ${isDarkCard ? 'bg-white/60' : 'bg-[#1A1816]/40'} mx-auto lg:mx-0`} />
 
-            <p className={`text-base sm:text-lg font-medium leading-relaxed max-w-xl font-sans ${isDarkCard ? '!text-[#FAF8F5] text-[#FAF8F5]' : '!text-[#36322E] text-[#36322E]'}`}>
+            <p className={`text-sm sm:text-lg font-medium leading-relaxed max-w-xl font-sans ${isDarkCard ? '!text-[#FAF8F5] text-[#FAF8F5]' : '!text-[#36322E] text-[#36322E]'}`}>
               {current.description}
             </p>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-5">
               <Link
                 to={current.link || `/shop?category=${current.slug || 'all'}`}
-                className="px-8 py-4 bg-[#1A1816] text-white hover:bg-white hover:text-[#1A1816] rounded-full font-display font-bold text-xs tracking-widest uppercase transition-all shadow-xl hover:scale-105 flex items-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#1A1816] text-white hover:bg-white hover:text-[#1A1816] rounded-full font-display font-bold text-xs tracking-widest uppercase transition-all shadow-xl hover:scale-105 flex items-center justify-center gap-2 cursor-pointer text-center"
               >
                 <span>EXPLORE {current.name}</span>
                 <ArrowRight className="w-4 h-4 text-[#D69E4A]" />
@@ -143,7 +143,7 @@ export const ColorStoryChapter = () => {
 
           {/* Chapter Image Card (6 Cols) — Static Frame */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center bg-white/40">
+            <div className="relative w-full max-w-[280px] xs:max-w-[340px] sm:max-w-md aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center bg-white/40 mx-auto">
               {current.image ? (
                 <img
                   src={current.image}
@@ -153,8 +153,8 @@ export const ColorStoryChapter = () => {
               ) : (
                 <div className="w-full h-full bg-white/20" />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-                <span className="text-white text-xs font-black tracking-widest uppercase bg-black/40 px-3 py-1 rounded-full backdrop-blur-md">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4 sm:p-6">
+                <span className="text-white text-[10px] sm:text-xs font-black tracking-widest uppercase bg-black/40 px-3 py-1 rounded-full backdrop-blur-md">
                   Lookbook Feature 0{activeChapter + 1}
                 </span>
               </div>

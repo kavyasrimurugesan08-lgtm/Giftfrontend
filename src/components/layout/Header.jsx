@@ -12,18 +12,21 @@ import {
   LogOut, 
   LogIn, 
   Gift, 
-  Star 
+  Star,
+  Menu
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useAuth } from '../../context/AuthContext';
 import { SearchModal } from '../common/SearchModal';
+import { MobileMenu } from './MobileMenu';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { totalItemCount, setIsCartOpen } = useCart();
   const { wishlistCount } = useWishlist();
@@ -128,36 +131,48 @@ export const Header = () => {
           {/* Bottom Sheen Ambient Line */}
           <div className="absolute inset-x-10 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none z-20" />
 
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 lg:gap-6 relative z-10">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3 lg:gap-6 relative z-10">
             
-            {/* LEFT: Brand Logo */}
-            <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
-              <div className="relative shrink-0">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#AC5B44] via-[#8F3E28] to-[#47342C] flex items-center justify-center text-white shadow-md shadow-[#AC5B44]/25 group-hover:scale-105 group-hover:rotate-3 transition-all duration-300 border border-white/30">
-                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-white" />
-                </div>
-                {/* Floating Micro Ping Glow */}
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#E8D49A] animate-ping" />
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#E8D49A] border-2 border-white" />
-              </div>
+            {/* LEFT: Mobile Menu Hamburger + Brand Logo */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              {/* Hamburger Toggle (Visible on Mobile/Tablet < lg) */}
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-[#18110D] hover:text-[#AC5B44] bg-white/30 hover:bg-white/50 border border-white/60 rounded-full transition-all backdrop-blur-md cursor-pointer shrink-0 shadow-xs active:scale-95"
+                aria-label="Open mobile navigation menu"
+              >
+                <Menu className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+              </button>
 
-              <div className="flex flex-col justify-center text-left">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-editorial text-xl sm:text-2xl font-black tracking-tight text-[#18110D] group-hover:text-[#AC5B44] transition-colors leading-none">
-                    GIFTPocket
-                  </span>
-                  <span className="text-[8.5px] font-sans font-black uppercase px-2 py-0.5 rounded-full bg-[#C97D67]/15 text-[#C97D67] border border-[#C97D67]/30 tracking-wider hidden sm:inline-block shadow-2xs backdrop-blur-xs">
-                    Studio
+              {/* Brand Logo */}
+              <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+                <div className="relative shrink-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#AC5B44] via-[#8F3E28] to-[#47342C] flex items-center justify-center text-white shadow-md shadow-[#AC5B44]/25 group-hover:scale-105 group-hover:rotate-3 transition-all duration-300 border border-white/30">
+                    <Sparkles className="w-3.5 h-3.5 sm:w-5 sm:h-5 fill-current text-white" />
+                  </div>
+                  {/* Floating Micro Ping Glow */}
+                  <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#E8D49A] animate-ping" />
+                  <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#E8D49A] border-2 border-white" />
+                </div>
+
+                <div className="flex flex-col justify-center text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-editorial text-lg sm:text-2xl font-black tracking-tight text-[#18110D] group-hover:text-[#AC5B44] transition-colors leading-none">
+                      GIFTPocket
+                    </span>
+                    <span className="text-[8px] sm:text-[8.5px] font-sans font-black uppercase px-1.5 sm:px-2 py-0.5 rounded-full bg-[#C97D67]/15 text-[#C97D67] border border-[#C97D67]/30 tracking-wider hidden sm:inline-block shadow-2xs backdrop-blur-xs">
+                      Studio
+                    </span>
+                  </div>
+                  <span className="text-[9px] sm:text-[9.5px] font-hand text-[#47342C] font-bold tracking-wider leading-tight mt-0.5 group-hover:translate-x-0.5 transition-transform whitespace-nowrap hidden xs:inline-block">
+                    Little Things. Big Smiles. ♡
                   </span>
                 </div>
-                <span className="text-[9.5px] font-hand text-[#47342C] font-bold tracking-wider leading-tight mt-0.5 group-hover:translate-x-0.5 transition-transform whitespace-nowrap hidden xs:inline-block">
-                  Little Things. Big Smiles. ♡
-                </span>
-              </div>
-            </Link>
+              </Link>
+            </div>
 
-            {/* CENTER: Horizontal Navigation Links (Web Desktop Style) */}
-            <nav className="flex items-center gap-1 xl:gap-2 overflow-x-auto scrollbar-none py-1">
+            {/* CENTER: Horizontal Navigation Links (Web Desktop Style Only - Hidden on Mobile) */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 py-1">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
@@ -338,13 +353,18 @@ export const Header = () => {
               {/* Shopping Bag Trigger Button with Frosted Terracotta Glass */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative flex items-center gap-1.5 sm:gap-2 h-8 sm:h-9 px-3 sm:px-4 bg-gradient-to-r from-[#AC5B44] to-[#8F3E28] hover:from-[#18110D] hover:to-[#18110D] text-white rounded-full transition-all shadow-[0_4px_16px_rgba(172,91,68,0.35),inset_0_1px_1px_rgba(255,255,255,0.6)] border border-white/30 group hover:scale-105 active:scale-95 shrink-0 cursor-pointer backdrop-blur-md"
+                className="relative flex items-center gap-1.5 sm:gap-2 h-8 sm:h-9 px-2.5 sm:px-4 bg-gradient-to-r from-[#AC5B44] to-[#8F3E28] hover:from-[#18110D] hover:to-[#18110D] text-white rounded-full transition-all shadow-[0_4px_16px_rgba(172,91,68,0.35),inset_0_1px_1px_rgba(255,255,255,0.6)] border border-white/30 group hover:scale-105 active:scale-95 shrink-0 cursor-pointer backdrop-blur-md"
                 aria-label="Open Shopping Bag"
               >
                 <ShoppingBag className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                <span className="text-xs font-display font-bold">
-                  Bag {totalItemCount > 0 && `(${totalItemCount})`}
+                <span className="text-xs font-display font-bold hidden xs:inline">
+                  Bag
                 </span>
+                {totalItemCount > 0 && (
+                  <span className="text-xs font-display font-bold">
+                    ({totalItemCount})
+                  </span>
+                )}
                 {totalItemCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#E8D49A] rounded-full animate-ping" />
                 )}
@@ -357,6 +377,13 @@ export const Header = () => {
 
       {/* Quick Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
+      {/* Mobile Slide-Over Navigation Menu */}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        navLinks={navLinks}
+      />
     </>
   );
 };
